@@ -1,0 +1,46 @@
+<!-- add-event.component.html -->
+<div class="container mt-4">
+  <h2>Add New Event</h2>
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" formControlName="title" required>
+    </div>
+    
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" formControlName="description" rows="3"></textarea>
+    </div>
+    
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="startDateTime" class="form-label">Start Date & Time</label>
+        <input type="datetime-local" class="form-control" id="startDateTime" formControlName="startDateTime" required>
+      </div>
+      <div class="col-md-6">
+        <label for="endDateTime" class="form-label">End Date & Time</label>
+        <input type="datetime-local" class="form-control" id="endDateTime" formControlName="endDateTime" required>
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="course" class="form-label">Course</label>
+        <select class="form-select" id="course" formControlName="course">
+          <option value="">None</option>
+          <option *ngFor="let course of courses" [value]="course">{{course}}</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" formControlName="category">
+          <option value="">None</option>
+          <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+        </select>
+      </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary" [disabled]="!eventForm.valid">Add Event</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="navigateToCalendar()">Cancel</button>
+  </form>
+</div>

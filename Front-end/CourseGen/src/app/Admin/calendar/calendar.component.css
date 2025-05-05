@@ -1,0 +1,67 @@
+/* calendar.component.css */
+.calendar-header {
+    text-align: center;
+  }
+  
+  .calendar-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .week-header {
+    display: flex;
+    background-color: #f8f9fa;
+    font-weight: bold;
+  }
+  
+  .day-header {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    border-right: 1px solid #ddd;
+  }
+  
+  .day-header:last-child {
+    border-right: none;
+  }
+  
+  .month-grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .calendar-day {
+    flex: 0 0 calc(100% / 7);
+    min-height: 100px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 5px;
+  }
+  
+  .calendar-day:nth-child(7n) {
+    border-right: none;
+  }
+  
+  .other-month {
+    background-color: #f9f9f9;
+    color: #aaa;
+  }
+  
+  .day-number {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .event-item {
+    font-size: 0.8rem;
+    background-color: #e9f7fe;
+    padding: 2px 5px;
+    margin-bottom: 2px;
+    border-radius: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }

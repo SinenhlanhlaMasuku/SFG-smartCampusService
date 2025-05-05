@@ -1,0 +1,105 @@
+<div class="admin-dashboard-container"style="background-color:  #e4e9ef;">
+  <div class="top-nav">
+    <div class="logo">
+      <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
+    </div>
+    <div class="nav-right">
+      <button class="profile-btn">
+        <img src="assets/tut-logo.jpg" alt="Profile" class="profile-img" />
+      </button>
+    </div>
+  </div>
+  
+  <div class="body">
+    <div class="sidebar" [class.collapsed]="isCollapsed">
+      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+    <ul>
+      <li>
+        <i class="icon fa fa-home"></i>
+        <span *ngIf="!isCollapsed" routerLink="/admin-dashboard">Dashboard</span>
+      </li>
+      <li>
+        <i class="icon fas fa-book"></i>
+        <span *ngIf="!isCollapsed" routerLink="/admin-generate-content">View Bookings</span>
+      </li>
+      <li>
+          <i class="icon fas fa-file-alt"></i>
+          <span *ngIf="!isCollapsed" routerLink="/admin-view-content">Analyze Data Usage</span>
+      </li>
+      <li>
+        <i class="icon fas fa-user-check"></i>
+        <span *ngIf="!isCollapsed" routerLink="/user-management">User Management</span>
+      </li>
+      <li>
+        <i class="icon fas fa-users"></i>
+        <span *ngIf="!isCollapsed" routerLink="/add-event">Add Event/Announcement</span>
+      </li>
+      <hr class="divider" />
+      <li>
+        <i class="icon fas fa-sign-out-alt"></i>
+        <span class="logout-link" *ngIf="!isCollapsed" routerLink="/landing-page">Logout</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sub-header" [class.shifted]="isCollapsed">
+    <h3 class="sub-heading">SMART-CAMPUS SERVICE SYSTEM</h3>
+  </div>
+
+  <div class="dash-container-1" [class.shifted]="isCollapsed">
+    <div class="button-container">
+      <div class="card" style="width: 18rem;">
+        <div class="chatgpt-spinner card-img-top">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT Logo" class="chatgpt-logo">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">View Bookings</h5>
+          <p class="card-text">Monitor and manage all facility bookings across campus.</p>
+          <a class="btn btn-primary dashboard-button" routerLink="/admin-generate-content">
+            <span class="icon">✏️</span> View Bookings
+          </a>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <div class="book-spinner card-img-top">
+          <div class="book">
+            <div class="page"></div>
+            <div class="page"></div>
+            <div class="page"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Analyza data</h5>
+          <p class="card-text">Track and visualize campus resource utilization and trends.</p>
+          <a class="btn btn-primary dashboard-button" routerLink="/admin-view-courses">
+            <span class="icon">📄</span> View Content
+          </a>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="assets/accept.png" class="card-img-top" alt="Card image">
+        <div class="card-body">
+          <h5 class="card-title">Manage Requests</h5>
+          <p class="card-text">Review and approve new user registration requests.</p>
+          <a class="btn btn-primary dashboard-button" routerLink="/user-management">
+            <span class="icon">✔️</span>  Manage Requests
+          </a>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="assets/user-card.png"  class="card-img-top" alt="Card image">
+        <div class="card-body">
+          <h5 class="card-title">Add Event/Announcement</h5>
+          <p class="card-text">Access and manage all registered campus users and profiles.</p>
+          <a class="btn btn-primary dashboard-button" routerLink="/add-event">
+            <span class="icon">👤</span> View Users
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
