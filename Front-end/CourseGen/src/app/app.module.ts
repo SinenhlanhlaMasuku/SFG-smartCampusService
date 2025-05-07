@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './Trainer/login/login.component';
 import { RegisterComponent } from './Trainer/register/register.component';
-import { DashboardComponent } from './Trainer/dashboard/dashboard.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AdminGenerateContentComponent } from './Admin/admin-dashboard/admin-generate-content/admin-generate-content.component';
 import { AdminLoginComponent } from './Admin/admin-login/admin-login.component';
@@ -24,6 +23,11 @@ import { StdLoginComponent } from './Student/std-login/std-login.component';
 import { StdRegisterComponent } from './Student/std-register/std-register.component';
 import { StdDashboardComponent } from './Student/std-dashboard/std-dashboard.component';
 import { LecturerDashboardComponent } from './Trainer/lecturer-dashboard/lecturer-dashboard.component';
+import { BookRoomsComponent } from './Student/book-rooms/book-rooms.component';
+import { ViewScheduleComponent } from './Student/view-schedule/view-schedule.component';
+import { ViewAnnouncementsComponent } from './Student/view-announcements/view-announcements.component';
+import { ManageScheduleComponent } from './Trainer/manage-schedule/manage-schedule.component';
+import { ManageAnnouncementsComponent } from './Trainer/manage-announcements/manage-announcements.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,6 @@ import { LecturerDashboardComponent } from './Trainer/lecturer-dashboard/lecture
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    DashboardComponent,
     LandingPageComponent,
  
 
@@ -50,7 +53,12 @@ import { LecturerDashboardComponent } from './Trainer/lecturer-dashboard/lecture
     StdLoginComponent,
     StdRegisterComponent,
     StdDashboardComponent,
-    LecturerDashboardComponent
+    LecturerDashboardComponent,
+    BookRoomsComponent,
+    ViewScheduleComponent,
+    ViewAnnouncementsComponent,
+    ManageScheduleComponent,
+    ManageAnnouncementsComponent
   ],
   imports: [
     HttpClientModule,

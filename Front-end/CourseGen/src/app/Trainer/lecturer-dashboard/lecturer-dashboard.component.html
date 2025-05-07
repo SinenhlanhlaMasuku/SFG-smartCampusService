@@ -1,7 +1,7 @@
 <div class="admin-dashboard-container"style="background-color:  #e4e9ef;">
     <div class="top-nav">
       <div class="logo">
-        <img src="assets/Word-logo.png" alt="Logo" class="logo-img" />
+        <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
       </div>
       <div class="nav-right">
         <button class="profile-btn">
@@ -20,7 +20,11 @@
         </li>
         <li>
           <i class="icon fas fa-book"></i>
-          <span *ngIf="!isCollapsed" routerLink="/generate-content">View Schedule</span>
+          <span *ngIf="!isCollapsed" routerLink="/manage-schedule">View/Manage Schedule</span>
+        </li>
+        <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/manage-announcements">Manage Announcement</span>
         </li>
         <li>
           <i class="icon fas fa-file-alt"></i>
@@ -48,7 +52,7 @@
           <div class="card-body">
             <h5 class="card-title">Create Schedule</h5>
             <p class="card-text">Create and customize schedules for students.</p>
-            <a class="btn btn-primary dashboard-button" routerLink="/generate-content">
+            <a class="btn btn-primary dashboard-button" routerLink="/manage-schedule">
               <span class="icon">✏️</span> Create Schedule
             </a>
           </div>
@@ -65,7 +69,7 @@
           <div class="card-body">
             <h5 class="card-title">Create Announcement</h5>
             <p class="card-text">Create announcements or events</p>
-            <a class="btn btn-primary dashboard-button" routerLink="/view-courses">
+            <a class="btn btn-primary dashboard-button" routerLink="/manage-announcements">
               <span class="icon">📄</span> Create Announcement
             </a>
           </div>

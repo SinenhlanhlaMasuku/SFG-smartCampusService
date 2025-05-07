@@ -1,7 +1,7 @@
 <div class="admin-dashboard-container"style="background-color:  #e4e9ef;">
     <div class="top-nav">
       <div class="logo">
-        <img src="assets/Word-logo.png" alt="Logo" class="logo-img" />
+        <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
       </div>
       <div class="nav-right">
         <button class="profile-btn">
@@ -20,12 +20,16 @@
         </li>
         <li>
           <i class="icon fas fa-book"></i>
-          <span *ngIf="!isCollapsed" routerLink="/generate-content">Book a Room</span>
+          <span *ngIf="!isCollapsed" routerLink="/book-rooms">Book a Room</span>
         </li>
         <li>
           <i class="icon fas fa-file-alt"></i>
-          <span *ngIf="!isCollapsed" routerLink="/view-content">View Announcement</span>
+          <span *ngIf="!isCollapsed" routerLink="/view-announcements">View Announcement</span>
       </li>
+      <li>
+        <i class="icon fas fa-file-alt"></i>
+        <span *ngIf="!isCollapsed" routerLink="/view-schedule">View Schedule</span>
+    </li>
         <hr class="divider" />
         <li>
           <i class="icon fas fa-sign-out-alt"></i>
@@ -47,7 +51,7 @@
           <div class="card-body">
             <h5 class="card-title">View Schedule</h5>
             <p class="card-text">Access your course schedule</p>
-            <a class="btn btn-primary dashboard-button" routerLink="/generate-content">
+            <a class="btn btn-primary dashboard-button" routerLink="/view-schedule">
               <span class="icon">✏️</span> View Schedule
             </a>
           </div>
@@ -64,7 +68,7 @@
           <div class="card-body">
             <h5 class="card-title">Book A Lab</h5>
             <p class="card-text">Available labs for studying and completing school related tasks</p>
-            <a class="btn btn-primary dashboard-button" routerLink="/view-courses">
+            <a class="btn btn-primary dashboard-button" routerLink="/book-rooms">
               <span class="icon">📄</span> Book A Lab
             </a>
           </div>

@@ -1,0 +1,59 @@
+<div class="announcements-container">
+    <h2>Announcements</h2>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    
+    <div class="announcement-controls">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="filter">Filter by:</label>
+            <select id="filter" class="form-control" [(ngModel)]="selectedFilter" (change)="filterAnnouncements()">
+              <option value="all">All Announcements</option>
+              <option value="academic">Academic</option>
+              <option value="event">Events</option>
+              <option value="important">Important</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="search">Search:</label>
+            <input type="text" id="search" class="form-control" 
+                   [(ngModel)]="searchQuery" 
+                   (input)="filterAnnouncements()"
+                   placeholder="Search announcements...">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="announcement-list">
+      <div *ngFor="let announcement of filteredAnnouncements" 
+           class="announcement-card" 
+           [class.unread]="!announcement.read"
+           (click)="markAsRead(announcement)">
+        <div class="announcement-header">
+          <span class="badge" [ngClass]="'badge-' + getBadgeClass(announcement.type)">
+            {{ announcement.type }}
+          </span>
+          <h4>{{ announcement.title }}</h4>
+          <small class="text-muted">
+            Posted by {{ announcement.author }} on {{ announcement.date | date:'mediumDate' }}
+          </small>
+        </div>
+        <div class="announcement-body">
+          <p>{{ announcement.content }}</p>
+          <div *ngIf="announcement.attachment" class="attachment">
+            <i class="fas fa-paperclip"></i>
+            <a [href]="announcement.attachment.url" target="_blank">{{ announcement.attachment.name }}</a>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="filteredAnnouncements.length === 0" class="alert alert-info">
+        No announcements match your criteria
+      </div>
+    </div>
+  </div>

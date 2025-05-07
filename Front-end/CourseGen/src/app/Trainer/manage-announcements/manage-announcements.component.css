@@ -1,0 +1,81 @@
+.manage-announcements-container {
+    padding: 20px;
+  }
+  
+  .announcement-form {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+  }
+  
+  .form-actions {
+    margin-top: 15px;
+  }
+  
+  .announcement-controls {
+    margin-bottom: 20px;
+  }
+  
+  .announcement-list {
+    display: grid;
+    gap: 15px;
+  }
+  
+  .announcement-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .announcement-header {
+    margin-bottom: 10px;
+  }
+  
+  .announcement-header h4 {
+    margin: 5px 0;
+    color: #007bff;
+  }
+  
+  .announcement-body {
+    margin: 15px 0;
+  }
+  
+  .announcement-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .attachment {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    display: inline-block;
+  }
+  
+  .badge {
+    margin-right: 10px;
+  }
+  
+  .badge-academic {
+    background-color: #17a2b8;
+  }
+  
+  .badge-event {
+    background-color: #28a745;
+  }
+  
+  .badge-important {
+    background-color: #dc3545;
+  }
+  
+  .badge-general {
+    background-color: #6c757d;
+  }
+  
+  .custom-file-label::after {
+    content: "Browse";
+  }

@@ -1,0 +1,75 @@
+.manage-schedule-container {
+    padding: 20px;
+  }
+  
+  .schedule-form {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+  }
+  
+  .form-actions {
+    margin-top: 15px;
+  }
+  
+  .day-selector {
+    margin-bottom: 20px;
+  }
+  
+  .schedule-day {
+    margin-bottom: 30px;
+  }
+  
+  .schedule-list {
+    display: grid;
+    gap: 15px;
+  }
+  
+  .schedule-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .schedule-info h4 {
+    margin-bottom: 5px;
+    color: #007bff;
+  }
+  
+  .schedule-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .weekly-view {
+    margin-top: 30px;
+    overflow-x: auto;
+  }
+  
+  .weekly-view table {
+    width: 100%;
+  }
+  
+  .weekly-view th, .weekly-view td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .weekly-view td {
+    height: 80px;
+  }
+  
+  .bg-primary {
+    background-color: #e9f7fe;
+  }
+  
+  .nav-tabs .nav-link.active {
+    font-weight: bold;
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+  }

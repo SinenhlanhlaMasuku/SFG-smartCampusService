@@ -1,0 +1,88 @@
+<div class="book-rooms-container">
+    <h2>Book Study Rooms</h2>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Available Rooms</h3>
+        <div class="room-list">
+          <div *ngFor="let room of availableRooms" 
+               class="room-card" 
+               [class.selected]="room.id === selectedRoom?.id"
+               (click)="selectRoom(room)">
+            <h4>{{ room.name }}</h4>
+            <p>Capacity: {{ room.capacity }}</p>
+            <p>Facilities: {{ room.facilities.join(', ') }}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div *ngIf="selectedRoom" class="booking-form">
+          <h3>Book {{ selectedRoom.name }}</h3>
+          <form (submit)="bookRoom()">
+            <div class="form-group">
+              <label for="bookingDate">Date</label>
+              <input type="date" id="bookingDate" class="form-control" [(ngModel)]="bookingDate" name="bookingDate" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="startTime">Start Time</label>
+              <input type="time" id="startTime" class="form-control" [(ngModel)]="startTime" name="startTime" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="endTime">End Time</label>
+              <input type="time" id="endTime" class="form-control" [(ngModel)]="endTime" name="endTime" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="purpose">Purpose</label>
+              <textarea id="purpose" class="form-control" [(ngModel)]="purpose" name="purpose"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Book Room</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="my-bookings">
+      <h3>My Bookings</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Room</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Purpose</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of bookings">
+            <td>{{ booking.roomName }}</td>
+            <td>{{ booking.date | date }}</td>
+            <td>{{ booking.startTime }} - {{ booking.endTime }}</td>
+            <td>{{ booking.purpose }}</td>
+            <td>
+              <span [class.text-success]="booking.status === 'Approved'"
+                    [class.text-warning]="booking.status === 'Pending'"
+                    [class.text-danger]="booking.status === 'Rejected'">
+                {{ booking.status }}
+              </span>
+            </td>
+            <td>
+              <button *ngIf="booking.status === 'Pending'" 
+                      class="btn btn-sm btn-danger" 
+                      (click)="cancelBooking(booking.roomId)">
+                Cancel
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

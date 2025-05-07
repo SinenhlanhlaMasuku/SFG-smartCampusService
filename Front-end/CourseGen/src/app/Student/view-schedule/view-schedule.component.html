@@ -1,0 +1,58 @@
+<div class="schedule-container">
+    <h2>My Class Schedule</h2>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    
+    <div class="day-selector">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let day of daysOfWeek">
+          <a class="nav-link" [class.active]="selectedDay === day" (click)="selectedDay = day">{{ day }}</a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="schedule-day">
+      <h3>{{ selectedDay }}</h3>
+      
+      <div *ngIf="getDaySchedule(selectedDay).length === 0" class="alert alert-info">
+        No classes scheduled for this day
+      </div>
+      
+      <div class="schedule-list">
+        <div *ngFor="let item of getDaySchedule(selectedDay)" class="schedule-item">
+          <div class="course-info">
+            <h4>{{ item.courseName }} ({{ item.courseCode }})</h4>
+            <p>{{ item.startTime }} - {{ item.endTime }}</p>
+            <p>{{ item.location }}</p>
+          </div>
+          <div class="instructor-info">
+            <p>Instructor: {{ item.instructor }}</p>
+            <p *ngIf="item.officeHours">Office Hours: {{ item.officeHours }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="weekly-view">
+      <h3>Weekly Overview</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th *ngFor="let day of daysOfWeek">{{ day }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let time of ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00']">
+            <td>{{ time }}</td>
+            <td *ngFor="let day of daysOfWeek" [class.bg-primary]="hasClassAt(day, time)">
+              <div *ngFor="let item of getClassesAt(day, time)">
+                {{ item.courseCode }}<br>
+                {{ item.location }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
