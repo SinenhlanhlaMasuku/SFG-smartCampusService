@@ -38,14 +38,14 @@ public class OpenApiConfig {
         }
     }
 
-    @Bean
-    public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration()
-                .setFieldMatchingEnabled(true)
-                .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
-        return modelMapper;
-    }
+    // @Bean
+    // public ModelMapper modelMapper() {
+    //     ModelMapper modelMapper = new ModelMapper();
+    //     modelMapper.getConfiguration()
+    //             .setFieldMatchingEnabled(true)
+    //             .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
+    //     return modelMapper;
+    // }
 
     @Configuration
     @EnableAsync

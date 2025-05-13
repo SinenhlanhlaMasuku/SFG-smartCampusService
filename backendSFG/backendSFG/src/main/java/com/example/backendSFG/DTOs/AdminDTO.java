@@ -1,17 +1,14 @@
 package com.example.backendSFG.DTOs;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class AdminDTO {
 
-    private String Name;
-    private String Surname;
+    private String name;
+    private String surname;
     private String email;
     private String password;
 }

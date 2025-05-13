@@ -11,8 +11,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AdminLoginComponent } from './Admin/admin-login/admin-login.component';
 import { ForgotPasswordComponent } from './Trainer/forgot-password/forgot-password.component';
 import { ProfileManagementComponent } from './profile-management/profile-management.component';
-import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
-import { UserManagementService } from './Services/user-management.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserManagementComponent } from './Admin/admin-dashboard/user-management/user-management.component';
 import { ViewUsersComponent } from './Admin/view-users/view-users.component';
@@ -27,7 +25,9 @@ import { ViewScheduleComponent } from './Student/view-schedule/view-schedule.com
 import { ViewAnnouncementsComponent } from './Student/view-announcements/view-announcements.component';
 import { ManageScheduleComponent } from './Trainer/manage-schedule/manage-schedule.component';
 import { ManageAnnouncementsComponent } from './Trainer/manage-announcements/manage-announcements.component';
-import { ViewBookingsComponent } from './Admin/view-bookings/view-bookings.component';
+import { ViewBookingComponent } from './Admin/view-bookings/view-bookings.component';
+import { AnalyzeDataComponent } from './Admin/analyze-data/analyze-data.component';
+import { UsersComponent } from './Admin/users/users.component';
 
 @NgModule({
   declarations: [
@@ -36,15 +36,15 @@ import { ViewBookingsComponent } from './Admin/view-bookings/view-bookings.compo
     RegisterComponent,
     LoginComponent,
     LandingPageComponent,
- 
 
+ 
     AdminLoginComponent,
     ForgotPasswordComponent,
     ProfileManagementComponent,
  
     UserManagementComponent,
     ViewUsersComponent,
-
+    ViewBookingComponent,
  
     AddEventComponent,
     CalendarComponent,
@@ -57,7 +57,9 @@ import { ViewBookingsComponent } from './Admin/view-bookings/view-bookings.compo
     ViewAnnouncementsComponent,
     ManageScheduleComponent,
     ManageAnnouncementsComponent,
-    ViewBookingsComponent
+    AnalyzeDataComponent,
+    UsersComponent,
+    
   ],
   imports: [
     HttpClientModule,

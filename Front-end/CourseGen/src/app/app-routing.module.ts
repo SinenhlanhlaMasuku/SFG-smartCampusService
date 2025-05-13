@@ -20,6 +20,9 @@ import { BookRoomsComponent } from './Student/book-rooms/book-rooms.component';
 import { ViewScheduleComponent } from './Student/view-schedule/view-schedule.component';
 import { ViewAnnouncementsComponent } from './Student/view-announcements/view-announcements.component';
 import { ManageAnnouncementsComponent } from './Trainer/manage-announcements/manage-announcements.component';
+import { ViewBookingComponent } from './Admin/view-bookings/view-bookings.component';
+import { AnalyzeDataComponent } from './Admin/analyze-data/analyze-data.component';
+import { UsersComponent } from './Admin/users/users.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent }, // Default landing page
@@ -41,7 +44,12 @@ const routes: Routes = [
   {path: 'std-dashboard', component: StdDashboardComponent},
   {path: 'book-rooms', component: BookRoomsComponent}, 
   {path: 'view-schedule', component: ViewScheduleComponent}, 
-  {path: 'view-announcements', component: ViewAnnouncementsComponent}, // Assuming this is the correct path for the view announcements component
+  {path: 'view-announcements', component: ViewAnnouncementsComponent},
+  { path: 'view-bookings', component: ViewBookingComponent },
+  { path: 'analyze-data', component: AnalyzeDataComponent }, 
+   { path: 'users', component: UsersComponent },
+   { path: 'add-event', component: AddEventComponent },
+   // Assuming this is the correct path for the view announcements component
   { path: '**', redirectTo: '' }  // Redirect unknown routes to the landing page
 ];
 

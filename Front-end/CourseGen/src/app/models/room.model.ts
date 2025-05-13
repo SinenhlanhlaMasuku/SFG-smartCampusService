@@ -5,6 +5,7 @@ export interface Room {
     facilities: string[];
     building: string;
     floor: number;
+    isAvailable: boolean;
   }
   
   export interface Booking {

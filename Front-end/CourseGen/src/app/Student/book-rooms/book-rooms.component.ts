@@ -11,6 +11,7 @@ import { Booking } from '../../models/booking.model';
 export class BookRoomsComponent implements OnInit {
   availableRooms: Room[] = [];
   selectedRoom: Room | null = null;
+  user: string = '';
   bookingDate: string = '';
   startTime: string = '';
   endTime: string = '';
@@ -51,12 +52,14 @@ export class BookRoomsComponent implements OnInit {
 
     const booking: Booking = {
       roomId: this.selectedRoom.id,
+      // user: this.
       roomName: this.selectedRoom.name,
       date: this.bookingDate,
       startTime: this.startTime,
       endTime: this.endTime,
       purpose: this.purpose,
-      status: 'Pending'
+      status: 'Pending',
+      user: ''
     };
 
     this.roomBookingService.bookRoom(booking).subscribe(

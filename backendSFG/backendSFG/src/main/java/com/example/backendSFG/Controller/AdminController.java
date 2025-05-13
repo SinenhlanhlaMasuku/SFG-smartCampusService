@@ -17,14 +17,12 @@ public class AdminController {
     private AdminService adminService;
  
     @PostMapping("/Adminlogin")
-    public ResponseEntity<String> login(@RequestBody AdminDTO adminLogin) {
- 
-        Message authResponse = adminService.authenticateAdmin(adminLogin.getEmail(), adminLogin.getPassword());
- 
-        if ("Success".equals(authResponse.getResponse())) {
-            return ResponseEntity.ok(authResponse.getMessage());
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authResponse.getMessage());
-        }
+    public Message login(@RequestBody AdminDTO adminLogin) {
+        return adminService.loginAdmin(adminLogin.getEmail(), adminLogin.getPassword());
+    }
+
+    @PostMapping("/Adminregister")
+    public Message register(@RequestBody AdminDTO adminRegister) {
+        return adminService.registerAdmin(adminRegister);
     }
 }

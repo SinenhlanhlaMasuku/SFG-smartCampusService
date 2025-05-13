@@ -1,1 +1,25 @@
-<p>view-bookings works!</p>
+<h2>View Bookings</h2>
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let column of displayedColumns">{{ column }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let booking of bookings">
+        <td>{{ booking.id }}</td>
+        <td>{{ booking.roomName }}</td>
+        <td>{{ booking.user }}</td>
+        <td>{{ booking.date | date }}</td>
+        <td>{{ booking.startTime }}</td>
+        <td>{{ booking.endTime }}</td>
+        <td>{{ booking.status }}</td>
+        <td>
+          <button (click)="editBooking(booking.id)">Edit</button>
+          <button (click)="cancelBooking(booking.id)">Cancel</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
