@@ -8,7 +8,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './Trainer/login/login.component';
 import { RegisterComponent } from './Trainer/register/register.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { AdminGenerateContentComponent } from './Admin/admin-dashboard/admin-generate-content/admin-generate-content.component';
 import { AdminLoginComponent } from './Admin/admin-login/admin-login.component';
 import { ForgotPasswordComponent } from './Trainer/forgot-password/forgot-password.component';
 import { ProfileManagementComponent } from './profile-management/profile-management.component';
@@ -28,6 +27,7 @@ import { ViewScheduleComponent } from './Student/view-schedule/view-schedule.com
 import { ViewAnnouncementsComponent } from './Student/view-announcements/view-announcements.component';
 import { ManageScheduleComponent } from './Trainer/manage-schedule/manage-schedule.component';
 import { ManageAnnouncementsComponent } from './Trainer/manage-announcements/manage-announcements.component';
+import { ViewBookingsComponent } from './Admin/view-bookings/view-bookings.component';
 
 @NgModule({
   declarations: [
@@ -42,10 +42,8 @@ import { ManageAnnouncementsComponent } from './Trainer/manage-announcements/man
     ForgotPasswordComponent,
     ProfileManagementComponent,
  
-    AdminDashboardComponent,
     UserManagementComponent,
     ViewUsersComponent,
-    AdminGenerateContentComponent,
 
  
     AddEventComponent,
@@ -58,7 +56,8 @@ import { ManageAnnouncementsComponent } from './Trainer/manage-announcements/man
     ViewScheduleComponent,
     ViewAnnouncementsComponent,
     ManageScheduleComponent,
-    ManageAnnouncementsComponent
+    ManageAnnouncementsComponent,
+    ViewBookingsComponent
   ],
   imports: [
     HttpClientModule,

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './Trainer/login/login.component';
 import { RegisterComponent } from './Trainer/register/register.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { AdminGenerateContentComponent } from './Admin/admin-dashboard/admin-generate-content/admin-generate-content.component';
 import { AdminLoginComponent } from './Admin/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard.component';
 import { ForgotPasswordComponent } from './Trainer/forgot-password/forgot-password.component';
@@ -29,8 +28,6 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'manage-schedule', component: ManageAnnouncementsComponent },
   { path: 'manage-announcements', component: ManageAnnouncementsComponent },
-  { path: 'admin-generate-content', component: AdminGenerateContentComponent },
-  
   { path: 'admin-login', component: AdminLoginComponent },
   { path: 'profile-management', component: ProfileManagementComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent },
