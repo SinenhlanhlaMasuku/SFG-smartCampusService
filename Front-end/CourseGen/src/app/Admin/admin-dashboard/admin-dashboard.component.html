@@ -9,95 +9,92 @@
       </button>
     </div>
   </div>
-  
 
-   <div class="body">
+
+  <div class="body">
     <div class="sidebar" [class.collapsed]="isCollapsed">
-      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
-    <ul>
-      <li>
-        <i class="icon fa fa-home" routerLink="/admin-dashboard"></i>
-        <span *ngIf="!isCollapsed" routerLink="/admin-dashboard">Dashboard</span>
-      </li>
-      <li>
-        <i class="icon fas fa-book"></i>
-        <span *ngIf="!isCollapsed" routerLink="/view-bookings">View Bookings</span>
-      </li>
-      <li>
+        <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+      <ul>
+        <li>
+          <i class="icon fa fa-home"></i>
+          <span *ngIf="!isCollapsed">Dashboard</span>
+        </li>
+        <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/book-rooms">Book a Room</span>
+        </li>
+        <li>
           <i class="icon fas fa-file-alt"></i>
-          <span *ngIf="!isCollapsed" routerLink="/analyze-data">Analyze Data Usage</span>
+          <span *ngIf="!isCollapsed" routerLink="/view-announcements">View Announcement</span>
       </li>
       <li>
-        <i class="icon fas fa-user-check"></i>
-        <span *ngIf="!isCollapsed" routerLink="/users">User Management</span>
-      </li>
-      <li>
-        <i class="icon fas fa-users"></i>
-        <span *ngIf="!isCollapsed" routerLink="/add-event">Add Event/Announcement</span>
-      </li>
-      <hr class="divider" />
-      <li>
-        <i class="icon fas fa-sign-out-alt"></i>
-        <span class="logout-link" *ngIf="!isCollapsed" routerLink="/landing-page">Logout</span>
-      </li>
-    </ul>
-  </div>
+        <i class="icon fas fa-file-alt"></i>
+        <span *ngIf="!isCollapsed" routerLink="/view-schedule">View Schedule</span>
+    </li>
+        <hr class="divider" />
+        <li>
+          <i class="icon fas fa-sign-out-alt"></i>
+          <span class="logout-link" routerLink="/landing-page" *ngIf="!isCollapsed">Logout</span>
+        </li>
+      </ul>
+    </div>
 
-  <div class="sub-header" [class.shifted]="isCollapsed">
-    <h3 class="sub-heading">SMART-CAMPUS SERVICE SYSTEM</h3>
-  </div>
+    <div class="sub-header" [class.shifted]="isCollapsed">
+      <h3 class="sub-heading">SMART-CAMPUS SERVICE SYSTEM</h3>
+    </div>
 
-  <div class="dash-container-1" [class.shifted]="isCollapsed">
-    <div class="button-container">
-      <div class="card" style="width: 18rem;">
-        <div class="chatgpt-spinner card-img-top">
-          <i class="fas fa-calendar-alt fa-4x"></i>
+    <div class="dash-container-1" [class.shifted]="isCollapsed">
+      <div class="button-container">
+        <div class="card" style="width: 18rem;">
+          <div class="chatgpt-spinner card-img-top">
+            <i class="fas fa-calendar-alt fa-4x"></i>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">View Bookings</h5>
+            <p class="card-text">Monitor and manage all facility bookings across campus.</p>
+            <a class="btn btn-primary dashboard-button" routerLink="/view-bookings">
+              <span class="fas fa-calendar-check"></span> View Bookings
+            </a>
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title" >View Bookings</h5>
-          <p class="card-text">Monitor and manage all facility bookings across campus.</p>
-          <a class="btn btn-primary dashboard-button" >
-            <i class="fas fa-calendar-check" routerLink="/view-bookings"></i> View Bookings
-          </a>
-        </div>
-      </div>
 
-      <div class="card" style="width: 18rem;">
-        <div class="book-spinner card-img-top">
-          <i class="fas fa-chart-line fa-4x"></i>
+        <div class="card" style="width: 18rem;">
+          <div class="book-spinner card-img-top">
+            <i class="fas fa-chart-line fa-4x"></i>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Analyze Data</h5>
+            <p class="card-text">Track and visualize campus resource utilization and trends.</p>
+            <a class="btn btn-primary dashboard-button" routerLink="/analyze-data">
+              <i class="fas fa-chart-pie"></i> View Analytics
+            </a>
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">Analyze Data</h5>
-          <p class="card-text">Track and visualize campus resource utilization and trends.</p>
-          <a class="btn btn-primary dashboard-button" routerLink="/analyze-data">
-            <i class="fas fa-chart-pie"></i> View Analytics
-          </a>
-        </div>
-      </div>
 
-      <div class="card" style="width: 18rem;">
-        <div class="chatgpt-spinner card-img-top">
-          <i class="fas fa-user-shield fa-4x"></i>
+        <div class="card" style="width: 18rem;">
+          <div class="chatgpt-spinner card-img-top">
+            <i class="fas fa-user-shield fa-4x"></i>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Manage Requests</h5>
+            <p class="card-text">Review and approve new user registration requests.</p>
+            <a class="btn btn-primary dashboard-button" routerLink="/users">
+              <i class="fas fa-user-check"></i> Manage Requests
+            </a>
+          </div>
         </div>
-        <div class="card-body">
-          <h5 class="card-title">Manage Requests</h5>
-          <p class="card-text">Review and approve new user registration requests.</p>
-          <a class="btn btn-primary dashboard-button" routerLink="/users">
-            <i class="fas fa-user-check"></i> Manage Requests
-          </a>
-        </div>
-      </div>
 
-      <div class="card" style="width: 18rem;">
-        <div class="chatgpt-spinner card-img-top">
-          <i class="fas fa-calendar-plus fa-4x"></i>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Add Event/Announcement</h5>
-          <p class="card-text">Create and publish campus events and announcements.</p>
-          <a class="btn btn-primary dashboard-button" routerLink="/add-event">
-            <i class="fas fa-bullhorn"></i> Add Event
-          </a>
+        <div class="card" style="width: 18rem;">
+          <div class="chatgpt-spinner card-img-top">
+            <i class="fas fa-calendar-plus fa-4x"></i>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Add Event/Announcement</h5>
+            <p class="card-text">Create and publish campus events and announcements.</p>
+            <a class="btn btn-primary dashboard-button" routerLink="/add-event">
+              <i class="fas fa-bullhorn"></i> Add Event
+            </a>
+          </div>
         </div>
       </div>
     </div>

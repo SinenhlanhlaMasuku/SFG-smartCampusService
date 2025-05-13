@@ -28,6 +28,7 @@ import { ManageAnnouncementsComponent } from './Trainer/manage-announcements/man
 import { ViewBookingComponent } from './Admin/view-bookings/view-bookings.component';
 import { AnalyzeDataComponent } from './Admin/analyze-data/analyze-data.component';
 import { UsersComponent } from './Admin/users/users.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { UsersComponent } from './Admin/users/users.component';
     AppRoutingModule,
     FormsModule,
     FontAwesomeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   providers: [
     provideClientHydration()
