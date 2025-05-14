@@ -75,46 +75,51 @@ throw new Error('Method not implemented.');
   }
 
   onSubmit(): void {
-    if (this.announcementForm.invalid) {
-      this.errorMessage = 'Please fill all required fields';
-      return;
-    }
-
-    const formData = new FormData();
-    const announcementData = this.announcementForm.value;
-
-    Object.keys(announcementData).forEach(key => {
-      if (announcementData[key] !== null && announcementData[key] !== undefined) {
-        formData.append(key, announcementData[key]);
-      }
-    });
-
-    if (this.attachmentFile) {
-      formData.append('attachment', this.attachmentFile);
-    }
-
-    if (this.isEditing && this.currentAnnouncementId) {
-      this.announcementService.updateAnnouncement(this.currentAnnouncementId, formData).subscribe(
-        () => {
-          this.loadAnnouncements();
-          this.resetForm();
-          this.successMessage = 'Announcement updated successfully';
-          setTimeout(() => this.successMessage = '', 3000);
-        },
-        error => this.errorMessage = 'Failed to update announcement'
-      );
-    } else {
-      this.announcementService.createAnnouncement(formData).subscribe(
-        () => {
-          this.loadAnnouncements();
-          this.resetForm();
-          this.successMessage = 'Announcement created successfully';
-          setTimeout(() => this.successMessage = '', 3000);
-        },
-        error => this.errorMessage = 'Failed to create announcement'
-      );
-    }
+  if (this.announcementForm.invalid) {
+    this.errorMessage = 'Please fill all required fields';
+    return;
   }
+
+  const formData = new FormData();
+  formData.append('title', this.announcementForm.value.title);
+  formData.append('content', this.announcementForm.value.content);
+  formData.append('type', this.announcementForm.value.type);
+  formData.append('author', 'current-user-id'); // Replace with actual user ID
+  formData.append('courses', JSON.stringify([])); // Add actual courses if needed
+  formData.append('targetGroups', JSON.stringify([])); // Add actual groups if needed
+
+  if (this.attachmentFile) {
+    formData.append('attachment', this.attachmentFile);
+  }
+
+  if (this.isEditing && this.currentAnnouncementId) {
+    this.announcementService.updateAnnouncement(this.currentAnnouncementId, formData).subscribe(
+      () => {
+        this.loadAnnouncements();
+        this.resetForm();
+        this.successMessage = 'Announcement updated successfully';
+        setTimeout(() => this.successMessage = '', 3000);
+      },
+      error => {
+        this.errorMessage = 'Failed to update announcement';
+        console.error(error);
+      }
+    );
+  } else {
+    this.announcementService.createAnnouncement(formData).subscribe(
+      () => {
+        this.loadAnnouncements();
+        this.resetForm();
+        this.successMessage = 'Announcement created successfully';
+        setTimeout(() => this.successMessage = '', 3000);
+      },
+      error => {
+        this.errorMessage = 'Failed to create announcement';
+        console.error(error);
+      }
+    );
+  }
+}
 
   editAnnouncement(announcement: Announcement): void {
     this.isEditing = true;
