@@ -23,13 +23,14 @@ import { ManageAnnouncementsComponent } from './Trainer/manage-announcements/man
 import { ViewBookingComponent } from './Admin/view-bookings/view-bookings.component';
 import { AnalyzeDataComponent } from './Admin/analyze-data/analyze-data.component';
 import { UsersComponent } from './Admin/users/users.component';
+import { ManageScheduleComponent } from './Trainer/manage-schedule/manage-schedule.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent }, // Default landing page
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'manage-schedule', component: ManageAnnouncementsComponent },
+  { path: 'manage-schedule', component: ManageScheduleComponent },
   { path: 'manage-announcements', component: ManageAnnouncementsComponent },
   { path: 'admin-login', component: AdminLoginComponent },
   { path: 'profile-management', component: ProfileManagementComponent },

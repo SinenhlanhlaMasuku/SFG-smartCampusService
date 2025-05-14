@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../../Services/schedule.service';
 import { LecturerSchedule } from '../../models/lecturer.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { CourseSchedule } from '../../models/schedule.mode';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-schedule',
@@ -9,134 +11,107 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./manage-schedule.component.css']
 })
 export class ManageScheduleComponent implements OnInit {
-    isCollapsed = true;
+  schedules: CourseSchedule[] = [];
+  currentSchedule: CourseSchedule = {
+    courseCode: '',
+    courseName: '',
+    day: 'Monday', // Default value
+    startTime: '',
+    endTime: '',
+    location: '',
+    instructor: '',
+    officeHours: ''
+  };
+  daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  isEditing = false;
+  isLoading = false;
+  errorMessage = '';
 
-  toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
-  }
-getClassesAt(_t119: string,_t114: string): any {
-throw new Error('Method not implemented.');
-}
-hasClassAt(_t119: string,_t114: string) {
-throw new Error('Method not implemented.');
-}
-  schedules: LecturerSchedule[] = [];
-  filteredSchedules: LecturerSchedule[] = [];
-  selectedDay: string = 'Monday';
-  daysOfWeek: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  scheduleForm: FormGroup;
-  isEditing: boolean = false;
-  currentScheduleId: string | undefined;
-  errorMessage: string = '';
-  successMessage: string = '';
-
-  constructor(
-    private scheduleService: ScheduleService,
-    private fb: FormBuilder
-  ) {
-    this.scheduleForm = this.fb.group({
-      courseCode: ['', Validators.required],
-      courseName: ['', Validators.required],
-      day: ['Monday', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-      location: ['', Validators.required],
-      officeHours: ['']
-    });
-  }
+  constructor(private scheduleService: ScheduleService) { }
 
   ngOnInit(): void {
     this.loadSchedules();
   }
 
   loadSchedules(): void {
-    this.scheduleService.getLecturerSchedules().subscribe(
-      schedules => {
-        this.schedules = schedules;
-        this.filterSchedules();
+    this.isLoading = true;
+    this.scheduleService.getAllSchedules().subscribe({
+      next: (data) => {
+        this.schedules = data;
+        this.isLoading = false;
       },
-      error => this.errorMessage = 'Failed to load schedules'
-    );
+      error: (err) => {
+        this.errorMessage = 'Failed to load schedules';
+        this.isLoading = false;
+        console.error(err);
+      }
+    });
   }
 
-  filterSchedules(): void {
-    this.filteredSchedules = this.schedules.filter(schedule => schedule.day === this.selectedDay);
+  onSubmit(form: NgForm): void {
+    if (form.invalid) return;
+
+    this.isLoading = true;
+    const operation = this.isEditing 
+      ? this.scheduleService.updateSchedule(this.currentSchedule.id!, this.currentSchedule)
+      : this.scheduleService.createSchedule(this.currentSchedule);
+
+    operation.subscribe({
+      next: () => {
+        this.loadSchedules();
+        this.resetForm(form);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = this.isEditing ? 'Update failed' : 'Creation failed';
+        this.isLoading = false;
+        console.error(err);
+      }
+    });
   }
 
-  onDayChange(day: string): void {
-    this.selectedDay = day;
-    this.filterSchedules();
-  }
-
-  onSubmit(): void {
-    if (this.scheduleForm.invalid) {
-      this.errorMessage = 'Please fill all required fields';
-      return;
-    }
-
-    const scheduleData: LecturerSchedule = this.scheduleForm.value;
-
-    if (this.isEditing && this.currentScheduleId) {
-      this.scheduleService.updateSchedule(this.currentScheduleId, scheduleData).subscribe(
-        () => {
-          this.loadSchedules();
-          this.resetForm();
-          this.successMessage = 'Schedule updated successfully';
-          setTimeout(() => this.successMessage = '', 3000);
-        },
-        error => this.errorMessage = 'Failed to update schedule'
-      );
-    } else {
-      this.scheduleService.addSchedule(scheduleData).subscribe(
-        () => {
-          this.loadSchedules();
-          this.resetForm();
-          this.successMessage = 'Schedule added successfully';
-          setTimeout(() => this.successMessage = '', 3000);
-        },
-        error => this.errorMessage = 'Failed to add schedule'
-      );
-    }
-  }
-
-  editSchedule(schedule: LecturerSchedule): void {
+  editSchedule(schedule: CourseSchedule): void {
+    this.currentSchedule = { ...schedule };
     this.isEditing = true;
-    this.currentScheduleId = schedule.id;
-    this.scheduleForm.patchValue({
-      courseCode: schedule.courseCode,
-      courseName: schedule.courseName,
-      day: schedule.day,
-      startTime: schedule.startTime,
-      endTime: schedule.endTime,
-      location: schedule.location,
-      officeHours: schedule.officeHours || ''
-    });
   }
 
-  deleteSchedule(scheduleId: string): void {
+  deleteSchedule(id: number): void {
     if (confirm('Are you sure you want to delete this schedule?')) {
-      this.scheduleService.deleteSchedule(scheduleId).subscribe(
-        () => {
+      this.isLoading = true;
+      this.scheduleService.deleteSchedule(id).subscribe({
+        next: () => {
           this.loadSchedules();
-          this.successMessage = 'Schedule deleted successfully';
-          setTimeout(() => this.successMessage = '', 3000);
+          this.isLoading = false;
         },
-        error => this.errorMessage = 'Failed to delete schedule'
-      );
+        error: (err) => {
+          this.errorMessage = 'Deletion failed';
+          this.isLoading = false;
+          console.error(err);
+        }
+      });
     }
   }
 
-  resetForm(): void {
-    this.scheduleForm.reset({
+  resetForm(form: NgForm): void {
+    form.resetForm();
+    this.currentSchedule = {
+      courseCode: '',
+      courseName: '',
       day: 'Monday',
+      startTime: '',
+      endTime: '',
+      location: '',
+      instructor: '',
       officeHours: ''
-    });
+    };
     this.isEditing = false;
-    this.currentScheduleId = undefined;
     this.errorMessage = '';
   }
 
-  getDaySchedule(day: string): LecturerSchedule[] {
-    return this.schedules.filter(item => item.day === day);
+  // Sidebar functionality (from your admin dashboard)
+  isCollapsed = true;
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }

@@ -7,7 +7,7 @@ import { Announcement } from '../models/announcement.model';
   providedIn: 'root'
 })
 export class AnnouncementService {
-  private apiUrl = 'api/announcements';
+  private apiUrl = 'http://localhost:8080/api/announcements';
 
   constructor(private http: HttpClient) { }
 

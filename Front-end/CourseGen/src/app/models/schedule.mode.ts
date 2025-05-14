@@ -7,6 +7,6 @@ export interface CourseSchedule {
     location: string;
     instructor: string;
     officeHours?: string;
-    currentScheduleId?: number;
+    id?: number;
     
   }
