@@ -1,4 +1,49 @@
-<div class="book-rooms-container">
+<div class="admin-dashboard-container"style="background-color:  #e4e9ef;">
+    <div class="top-nav">
+      <div class="logo">
+        <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
+      </div>
+      <div class="nav-right">
+        <button class="profile-btn">
+          <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
+        </button>
+      </div>
+    </div>
+    
+    <div class="body">
+      <div class="sidebar" [class.collapsed]="isCollapsed">
+        <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+      <ul>
+        <li>
+          <i class="icon fa fa-home"></i>
+          <span *ngIf="!isCollapsed">Dashboard</span>
+        </li>
+        <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/view-schedule">View Schedule</span>
+        </li>
+        <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/view-announcements">View Announcement</span>
+        </li>
+        <li>
+          <i class="icon fas fa-file-alt"></i>
+          <span *ngIf="!isCollapsed" routerLink="/book-rooms">Book a Lab</span>
+      </li>
+        <hr class="divider" />
+        <li>
+
+          <i class="icon fas fa-sign-out-alt"></i>
+          <span class="logout-link" routerLink="/landing-page" *ngIf="!isCollapsed">Logout</span>
+        </li>
+      </ul>
+    </div>
+     <div class="sub-header" [class.shifted]="isCollapsed">
+        <h3 class="sub-heading">ROOM BOOKINGS</h3>
+        <button class="back-button" routerLink="/std-dashboard">
+          <span class="icon"></span> Back </button>
+      </div>
+<div class="book-rooms-container" style="padding-top: 10%;width: 90%;padding-left: 20%;">
     <h2>Book Study Rooms</h2>
     
     <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>

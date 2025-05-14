@@ -5,7 +5,7 @@
     </div>
     <div class="nav-right">
       <button class="profile-btn">
-        <img src="assets/tut-logo.jpg" alt="Profile" class="profile-img" />
+        <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
       </button>
     </div>
   </div>
@@ -21,7 +21,7 @@
         </li>
         <li>
           <i class="icon fas fa-book"></i>
-          <span *ngIf="!isCollapsed" routerLink="/book-rooms">Book a Room</span>
+          <span *ngIf="!isCollapsed" routerLink="/analyze-data">Analyze Data</span>
         </li>
         <li>
           <i class="icon fas fa-file-alt"></i>
@@ -31,6 +31,11 @@
         <i class="icon fas fa-file-alt"></i>
         <span *ngIf="!isCollapsed" routerLink="/view-schedule">View Schedule</span>
     </li>
+      <li>
+        <i class="icon fas fa-file-alt"></i>
+        <span *ngIf="!isCollapsed" routerLink="/user-management">User Management</span>
+    </li>
+    
         <hr class="divider" />
         <li>
           <i class="icon fas fa-sign-out-alt"></i>
@@ -78,7 +83,7 @@
           <div class="card-body">
             <h5 class="card-title">Manage Requests</h5>
             <p class="card-text">Review and approve new user registration requests.</p>
-            <a class="btn btn-primary dashboard-button" routerLink="/users">
+            <a class="btn btn-primary dashboard-button" routerLink="/user-management">
               <i class="fas fa-user-check"></i> Manage Requests
             </a>
           </div>

@@ -9,6 +9,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./manage-schedule.component.css']
 })
 export class ManageScheduleComponent implements OnInit {
+    isCollapsed = true;
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 getClassesAt(_t119: string,_t114: string): any {
 throw new Error('Method not implemented.');
 }

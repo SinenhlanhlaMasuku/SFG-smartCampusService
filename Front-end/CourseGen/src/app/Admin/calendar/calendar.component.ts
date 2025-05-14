@@ -7,6 +7,8 @@ import { Event } from '../../Services/event.service';
   styleUrl: './calendar.component.css'
 })
 export class CalendarComponent implements OnInit {
+   isCollapsed = true;
+  isLoading: boolean = false;
   events: Event[] = [];
   currentDate = new Date();
   daysInMonth: Date[] = [];
@@ -61,6 +63,11 @@ export class CalendarComponent implements OnInit {
         console.error('Error loading events:', err);
       }
     });
+  }
+
+    
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
   }
 
   getEventsForDay(day: Date): Event[] {

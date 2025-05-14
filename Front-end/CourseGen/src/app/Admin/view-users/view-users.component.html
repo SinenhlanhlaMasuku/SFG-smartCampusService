@@ -20,21 +20,22 @@
         <span *ngIf="!isCollapsed" routerLink="/admin-dashboard">Dashboard</span>
       </li>
       <li>
-        <i class="icon fas fa-book"></i>
-        <span *ngIf="!isCollapsed" routerLink="/admin-generate-content">Generate Course</span>
-      </li>
-      <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/analyze-data">Analyze Data</span>
+        </li>
+        <li>
           <i class="icon fas fa-file-alt"></i>
-          <span *ngIf="!isCollapsed" routerLink="/admin-view-content">View Content</span>
+          <span *ngIf="!isCollapsed" routerLink="/view-announcements">View Announcement</span>
       </li>
       <li>
-        <i class="icon fas fa-user-check"></i>
+        <i class="icon fas fa-file-alt"></i>
+        <span *ngIf="!isCollapsed" routerLink="/view-schedule">View Schedule</span>
+    </li>
+      <li>
+        <i class="icon fas fa-file-alt"></i>
         <span *ngIf="!isCollapsed" routerLink="/user-management">User Management</span>
-      </li>
-      <li>
-        <i class="icon fas fa-users"></i>
-        <span *ngIf="!isCollapsed" routerLink="/add-event">Add Event/Announcement</span>
-      </li>
+    </li>
+    
       <hr class="divider" />
       <li>
         <i class="icon fas fa-sign-out-alt"></i>
@@ -50,4 +51,5 @@
 
     
   </div>
-  
+  <div class="container"style="padding-top: 10%;">
+    </div>

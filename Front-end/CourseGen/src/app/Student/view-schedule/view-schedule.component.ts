@@ -8,6 +8,11 @@ import { CourseSchedule } from '../../models/schedule.mode';
   styleUrls: ['./view-schedule.component.css']
 })
 export class ViewScheduleComponent implements OnInit {
+          isCollapsed = true;
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 
   schedule: CourseSchedule[] = [];
   selectedDay: string = 'Monday';

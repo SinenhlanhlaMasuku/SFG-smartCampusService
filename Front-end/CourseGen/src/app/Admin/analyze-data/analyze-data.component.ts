@@ -9,6 +9,9 @@ import { Chart, ChartOptions, ChartType, ChartData } from 'chart.js'; // Import 
   styleUrls: ['./analyze-data.component.css'],
 })
 export class AnalyzeDataComponent implements OnInit {
+
+  isCollapsed = true;
+  isLoading: boolean = false;
   labUsageData: LabUsageData[] = [];
   bookingTrendData: BookingTrendData[] = [];
 
@@ -62,6 +65,9 @@ export class AnalyzeDataComponent implements OnInit {
         },
       },
     });
+  }
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
   }
 
   renderBookingTrendChart(): void {

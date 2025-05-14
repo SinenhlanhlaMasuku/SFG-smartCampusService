@@ -9,6 +9,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./manage-announcements.component.css']
 })
 export class ManageAnnouncementsComponent implements OnInit {
+    isCollapsed = true;
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 getBadgeClass(arg0: string) {
 throw new Error('Method not implemented.');
 }

@@ -1,4 +1,50 @@
-<div class="manage-schedule-container">
+<div class="admin-dashboard-container"style="background-color:  #e4e9ef;">
+    <div class="top-nav">
+      <div class="logo">
+        <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
+      </div>
+      <div class="nav-right">
+        <button class="profile-btn">
+          <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
+        </button>
+      </div>
+    </div>
+    
+    <div class="body">
+      <div class="sidebar" [class.collapsed]="isCollapsed">
+        <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+      <ul>
+        <li>
+          <i class="icon fa fa-home"></i>
+          <span *ngIf="!isCollapsed">Dashboard</span>
+        </li>
+        <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/manage-schedule">View/Manage Schedule</span>
+        </li>
+        <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/manage-announcements">Manage Announcement</span>
+        </li>
+        <li>
+          <i class="icon fas fa-file-alt"></i>
+          <span *ngIf="!isCollapsed" routerLink="/view-content">Book a Lab</span>
+      </li>
+        <hr class="divider" />
+        <li>
+
+          <i class="icon fas fa-sign-out-alt"></i>
+          <span class="logout-link" routerLink="/landing-page" *ngIf="!isCollapsed">Logout</span>
+        </li>
+      </ul>
+    </div>
+     <div class="sub-header" [class.shifted]="isCollapsed">
+        <h3 class="sub-heading">MANAGE SCHEDULES</h3>
+        <button class="back-button" routerLink="/lecturer-dashboard">
+          <span class="icon"></span> Back </button>
+      </div>
+
+<div class="manage-schedule-container"style="padding-top: 10%;">
     <h2>Manage Teaching Schedule</h2>
     
     <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>

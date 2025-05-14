@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrl: './add-event.component.css'
 })
 export class AddEventComponent implements OnInit {
+    isCollapsed = true;
+  isLoading: boolean = false;
   eventForm: FormGroup;
   courses = ['Math', 'Science', 'History', 'Literature', 'Art'];
   categories = ['Lecture', 'Exam', 'Assignment', 'Meeting', 'Personal'];
@@ -34,6 +36,9 @@ export class AddEventComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+    toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 
   onSubmit(): void {
     if (this.eventForm.valid) {

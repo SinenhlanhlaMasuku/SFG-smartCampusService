@@ -8,6 +8,11 @@ import { Announcement } from '../../models/announcement.model';
   styleUrls: ['./view-announcements.component.css']
 })
 export class ViewAnnouncementsComponent implements OnInit {
+        isCollapsed = true;
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
   announcements: Announcement[] = [];
   filteredAnnouncements: Announcement[] = [];
   selectedFilter: string = 'all';

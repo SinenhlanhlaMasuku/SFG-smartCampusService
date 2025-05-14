@@ -10,7 +10,9 @@ import { CommonModule } from '@angular/common';
 })
 
 export class ViewBookingComponent implements OnInit {
-
+ isCollapsed = true;
+  isLoading: boolean = false;
+  
 date: any;
 cancelBooking(arg0: any) {
 throw new Error('Method not implemented.');
@@ -27,6 +29,9 @@ throw new Error('Method not implemented.');
     this.loadBookings();
   }
 
+    toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
   loadBookings(): void {
     this.bookingService.getMyBookings().subscribe(
       (data) => {

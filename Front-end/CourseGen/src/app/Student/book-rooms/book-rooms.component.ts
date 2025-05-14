@@ -9,6 +9,11 @@ import { Booking } from '../../models/booking.model';
   styleUrls: ['./book-rooms.component.css']
 })
 export class BookRoomsComponent implements OnInit {
+      isCollapsed = true;
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
   availableRooms: Room[] = [];
   selectedRoom: Room | null = null;
   user: string = '';
