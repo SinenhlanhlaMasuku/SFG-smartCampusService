@@ -19,7 +19,7 @@ public class StudentControlle {
     public ResponseEntity<StudentEntity> registerStudent(@RequestBody Map<String, String> registrationData) {
         try{
             String name = registrationData.get("name");
-            String surname = registrationData.get("nurname");
+            String surname = registrationData.get("surname");
             String email = registrationData.get("email");
             String password = registrationData.get("password");
              StudentEntity registeredStudent = studentService.registerStudent(name, surname, email, password);
