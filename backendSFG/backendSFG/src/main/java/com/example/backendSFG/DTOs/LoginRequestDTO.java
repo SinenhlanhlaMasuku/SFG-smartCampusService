@@ -5,10 +5,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LecturerDTO {
-    private String fullName;
+public class LoginRequestDTO {
     private String email;
-    private String staffId;
     private String password;
-    private String department;
+
 }

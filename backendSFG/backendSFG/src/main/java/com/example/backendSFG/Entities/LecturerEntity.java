@@ -11,20 +11,22 @@ import lombok.*;
 @Table(name = "Lecturer")
 public class LecturerEntity {
 
-    @Id
+ @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LecturerId")
-    private long LecturerId;
-
-    @Column(name = "Name")
-    private String Name;
-
-    @Column(name = "Surname")
-    private String Surname;
-
-    @Column(name = "Email")
+    private Long id;
+    
+    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(name = "Password")
+    
+    @Column(nullable = false)
     private String password;
+    
+    @Column(nullable = false)
+    private String fullName;
+    
+    @Column(nullable = false, unique = true)
+    private String staffId;
+    
+    @Column(nullable = false)
+    private String department;
 }

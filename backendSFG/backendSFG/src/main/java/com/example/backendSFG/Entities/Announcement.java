@@ -51,7 +51,29 @@ public class Announcement {
     private Attachment attachment;
 
     public enum AnnouncementType {
-        ACADEMIC, EVENT, IMPORTANT, GENERAL
+        ACADEMIC("Academic"),
+        EVENT("Event"),
+        IMPORTANT("Important"),
+        GENERAL("General");
+
+        private final String displayName;
+
+        AnnouncementType(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        public static AnnouncementType fromDisplayName(String displayName) {
+            for (AnnouncementType type : AnnouncementType.values()) {
+                if (type.displayName.equalsIgnoreCase(displayName)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("No enum constant with display name: " + displayName);
+        }
     }
 
     @Embeddable
@@ -77,5 +99,4 @@ public class Announcement {
         }
     }
 
-   
 }

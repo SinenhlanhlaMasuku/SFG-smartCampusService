@@ -13,9 +13,9 @@ export class AnnouncementService {
 
   // Existing student methods...
 
-  getLecturerAnnouncements(): Observable<Announcement[]> {
-    return this.http.get<Announcement[]>(`${this.apiUrl}/lecturer`);
-  }
+  getLecturerAnnouncements(lecturerId: string): Observable<Announcement[]> {
+  return this.http.get<Announcement[]>(`${this.apiUrl}/lecturer/${lecturerId}`);
+}
 
   createAnnouncement(formData: FormData): Observable<Announcement> {
     return this.http.post<Announcement>(this.apiUrl, formData);

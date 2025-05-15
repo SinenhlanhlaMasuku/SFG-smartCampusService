@@ -1,16 +1,17 @@
+export type AnnouncementType = 'Academic' | 'Event' | 'Important' | 'General';
+
 export interface Announcement {
     id: string;
     title: string;
     content: string;
     author: string;
     date: string;
-    type: 'Academic' | 'Event' | 'Important' | 'General';
+    type: AnnouncementType;
     read: boolean;
     attachment?: {
-      name: string;
-      url: string;
+        name: string;
+        url: string;
     };
-      // For lecturer view only
-  courses?: string[];
-  targetGroups?: string[];
+    courses?: string[];
+    targetGroups?: string[];
 }

@@ -28,25 +28,25 @@ public class AnnouncementController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-public ResponseEntity<Announcement> createAnnouncement(
-        @RequestParam("title") String title,
-        @RequestParam("content") String content,
-        @RequestParam("type") String type,
-        @RequestParam("author") String author,
-        @RequestParam(value = "courses", required = false) List<String> courses,
-        @RequestParam(value = "targetGroups", required = false) List<String> targetGroups,
-        @RequestPart(value = "attachment", required = false) MultipartFile file) throws IOException {
-    
-    Announcement announcement = new Announcement();
-    announcement.setTitle(title);
-    announcement.setContent(content);
-    announcement.setType(Announcement.AnnouncementType.valueOf(type));
-    announcement.setAuthor(author);
-    announcement.setTargetCourses(courses);
-    announcement.setTargetGroups(targetGroups);
-    
-    return ResponseEntity.ok(announcementService.createAnnouncement(announcement, file));
-}
+    public ResponseEntity<Announcement> createAnnouncement(
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("type") String type,
+            @RequestParam("author") String author,
+            @RequestParam(value = "courses", required = false) List<String> courses,
+            @RequestParam(value = "targetGroups", required = false) List<String> targetGroups,
+            @RequestPart(value = "attachment", required = false) MultipartFile file) throws IOException {
+
+        Announcement announcement = new Announcement();
+        announcement.setTitle(title);
+        announcement.setContent(content);
+        announcement.setType(Announcement.AnnouncementType.fromDisplayName(type)); // Updated this line
+        announcement.setAuthor(author);
+        announcement.setTargetCourses(courses);
+        announcement.setTargetGroups(targetGroups);
+
+        return ResponseEntity.ok(announcementService.createAnnouncement(announcement, file));
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Announcement> updateAnnouncement(

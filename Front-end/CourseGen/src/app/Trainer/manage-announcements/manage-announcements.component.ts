@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AnnouncementService } from '../../Services/announcement.service';
-import { Announcement } from '../../models/announcement.model';
+import { Announcement, AnnouncementType } from '../../models/announcement.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-manage-announcements',
@@ -9,14 +10,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./manage-announcements.component.css']
 })
 export class ManageAnnouncementsComponent implements OnInit {
-    isCollapsed = true;
+  isCollapsed = true;
+  isLoading: boolean = false;
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
   }
-getBadgeClass(arg0: string) {
-throw new Error('Method not implemented.');
-}
+  getBadgeClass(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   announcements: Announcement[] = [];
   filteredAnnouncements: Announcement[] = [];
   announcementForm: FormGroup;
@@ -30,12 +32,13 @@ throw new Error('Method not implemented.');
 
   constructor(
     private announcementService: AnnouncementService,
+    private authService: AuthService,
     private fb: FormBuilder
   ) {
     this.announcementForm = this.fb.group({
-      title: ['', Validators.required],
-      content: ['', Validators.required],
-      type: ['General', Validators.required],
+      title: ['', [Validators.required, Validators.maxLength(100)]],
+      content: ['', [Validators.required, Validators.maxLength(2000)]],
+      type: ['General' as AnnouncementType, Validators.required], // Explicit type casting
       attachmentName: ['']
     });
   }
@@ -45,22 +48,34 @@ throw new Error('Method not implemented.');
   }
 
   loadAnnouncements(): void {
-    this.announcementService.getLecturerAnnouncements().subscribe(
-      announcements => {
-        this.announcements = announcements;
-        this.filterAnnouncements();
-      },
-      error => this.errorMessage = 'Failed to load announcements'
-    );
+  const currentUser = this.authService.getCurrentUser();
+  if (!currentUser) {
+    this.errorMessage = 'Not authenticated';
+    return;
   }
+
+  this.isLoading = true;
+  this.announcementService.getLecturerAnnouncements(currentUser.id).subscribe({
+    next: (announcements) => {
+      this.announcements = announcements;
+      this.filterAnnouncements();
+      this.isLoading = false;
+    },
+    error: (error) => {
+      this.errorMessage = 'Failed to load announcements';
+      this.isLoading = false;
+      console.error(error);
+    }
+  });
+}
 
   filterAnnouncements(): void {
     this.filteredAnnouncements = this.announcements.filter(announcement => {
-      const typeMatch = this.selectedFilter === 'all' || 
-                       announcement.type.toLowerCase() === this.selectedFilter.toLowerCase();
-      const searchMatch = !this.searchQuery || 
-                         announcement.title.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-                         announcement.content.toLowerCase().includes(this.searchQuery.toLowerCase());
+      const typeMatch = this.selectedFilter === 'all' ||
+        announcement.type.toLowerCase() === this.selectedFilter.toLowerCase();
+      const searchMatch = !this.searchQuery ||
+        announcement.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        announcement.content.toLowerCase().includes(this.searchQuery.toLowerCase());
       return typeMatch && searchMatch;
     });
   }
@@ -75,51 +90,57 @@ throw new Error('Method not implemented.');
   }
 
   onSubmit(): void {
-  if (this.announcementForm.invalid) {
-    this.errorMessage = 'Please fill all required fields';
-    return;
-  }
+    if (this.announcementForm.invalid) {
+      this.errorMessage = 'Please fill all required fields';
+      return;
+    }
 
-  const formData = new FormData();
-  formData.append('title', this.announcementForm.value.title);
-  formData.append('content', this.announcementForm.value.content);
-  formData.append('type', this.announcementForm.value.type);
-  formData.append('author', 'current-user-id'); // Replace with actual user ID
-  formData.append('courses', JSON.stringify([])); // Add actual courses if needed
-  formData.append('targetGroups', JSON.stringify([])); // Add actual groups if needed
+    const formData = new FormData();
+    formData.append('title', this.announcementForm.value.title!);
+    formData.append('content', this.announcementForm.value.content!);
+    formData.append('type', this.announcementForm.value.type!);
+    formData.append('author', 'current-user-id'); // Replace with actual user ID
 
-  if (this.attachmentFile) {
-    formData.append('attachment', this.attachmentFile);
-  }
+    if (this.announcementForm.value.courses) {
+      formData.append('courses', JSON.stringify(this.announcementForm.value.courses));
+    }
 
-  if (this.isEditing && this.currentAnnouncementId) {
-    this.announcementService.updateAnnouncement(this.currentAnnouncementId, formData).subscribe(
-      () => {
-        this.loadAnnouncements();
-        this.resetForm();
-        this.successMessage = 'Announcement updated successfully';
-        setTimeout(() => this.successMessage = '', 3000);
-      },
-      error => {
-        this.errorMessage = 'Failed to update announcement';
-        console.error(error);
-      }
-    );
-  } else {
-    this.announcementService.createAnnouncement(formData).subscribe(
-      () => {
-        this.loadAnnouncements();
-        this.resetForm();
-        this.successMessage = 'Announcement created successfully';
-        setTimeout(() => this.successMessage = '', 3000);
-      },
-      error => {
-        this.errorMessage = 'Failed to create announcement';
-        console.error(error);
-      }
-    );
+    if (this.announcementForm.value.targetGroups) {
+      formData.append('targetGroups', JSON.stringify(this.announcementForm.value.targetGroups));
+    }
+
+    if (this.attachmentFile) {
+      formData.append('attachment', this.attachmentFile);
+    }
+
+    if (this.isEditing && this.currentAnnouncementId) {
+      this.announcementService.updateAnnouncement(this.currentAnnouncementId, formData).subscribe(
+        () => {
+          this.loadAnnouncements();
+          this.resetForm();
+          this.successMessage = 'Announcement updated successfully';
+          setTimeout(() => this.successMessage = '', 3000);
+        },
+        error => {
+          this.errorMessage = 'Failed to update announcement';
+          console.error(error);
+        }
+      );
+    } else {
+      this.announcementService.createAnnouncement(formData).subscribe(
+        () => {
+          this.loadAnnouncements();
+          this.resetForm();
+          this.successMessage = 'Announcement created successfully';
+          setTimeout(() => this.successMessage = '', 3000);
+        },
+        error => {
+          this.errorMessage = 'Failed to create announcement';
+          console.error(error);
+        }
+      );
+    }
   }
-}
 
   editAnnouncement(announcement: Announcement): void {
     this.isEditing = true;
