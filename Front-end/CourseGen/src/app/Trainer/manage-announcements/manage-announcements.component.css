@@ -1,85 +1,96 @@
 .manage-announcements-container {
-    padding: 20px;
-  }
-  
-  .announcement-form {
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-  }
-  
-  .form-actions {
-    margin-top: 15px;
-  }
-  
-  .announcement-controls {
-    margin-bottom: 20px;
-  }
-  
-  .announcement-list {
-    display: grid;
-    gap: 15px;
-  }
-  
-  .announcement-card {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fff;
-  }
-  
-  .announcement-header {
-    margin-bottom: 10px;
-  }
-  
-  .announcement-header h4 {
-    margin: 5px 0;
-    color: #007bff;
-  }
-  
-  .announcement-body {
-    margin: 15px 0;
-  }
-  
-  .announcement-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
-  .attachment {
-    margin-top: 10px;
-    padding: 5px;
-    background-color: #f1f1f1;
-    border-radius: 3px;
-    display: inline-block;
-  }
-  
-  .badge {
-    margin-right: 10px;
-  }
-  
-  .badge-academic {
-    background-color: #17a2b8;
-  }
-  
-  .badge-event {
-    background-color: #28a745;
-  }
-  
-  .badge-important {
-    background-color: #dc3545;
-  }
-  
-  .badge-general {
-    background-color: #6c757d;
-  }
-  
-  .custom-file-label::after {
-    content: "Browse";
-  }
-  /* manage-announcements.component.css */
+  padding: 20px;
+}
+
+.announcement-form {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+.form-actions {
+  margin-top: 15px;
+}
+
+.announcement-controls {
+  margin-bottom: 20px;
+}
+
+.announcement-list {
+  display: grid;
+  gap: 15px;
+}
+
+.announcement-card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background: white;
+}
+
+.announcement-header {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.announcement-header h4 {
+  margin: 5px 0;
+  color: #333;
+}
+
+.announcement-body {
+  margin: 15px 0;
+}
+
+.announcement-actions {
+  text-align: right;
+}
+
+.announcement-body p {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.attachment {
+  margin-top: 10px;
+  color: #666;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge-Academic {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.badge-Event {
+  background-color: #2196F3;
+  color: white;
+}
+
+.badge-Important {
+  background-color: #f44336;
+  color: white;
+}
+
+.badge-General {
+  background-color: #9E9E9E;
+  color: white;
+}
+
+.custom-file-label::after {
+  content: "Browse";
+}
+
+/* manage-announcements.component.css */
 /* manage-announcements.component.css */
 .input-group {
   width: 100%;
@@ -89,7 +100,8 @@
   border: 1px solid #ced4da;
   border-left: none;
   background-color: #f8f9fa;
-  height: calc(1.5em + 0.75rem + 2px); /* Match input height */
+  height: calc(1.5em + 0.75rem + 2px);
+  /* Match input height */
 }
 
 .input-group-append .btn:hover {

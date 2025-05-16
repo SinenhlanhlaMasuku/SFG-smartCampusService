@@ -8,7 +8,8 @@ import { Announcement } from '../../models/announcement.model';
   styleUrls: ['./view-announcements.component.css']
 })
 export class ViewAnnouncementsComponent implements OnInit {
-        isCollapsed = true;
+  isCollapsed = true;
+  isLoading: boolean = false;
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
@@ -22,51 +23,69 @@ export class ViewAnnouncementsComponent implements OnInit {
   constructor(private announcementService: AnnouncementService) { }
 
   ngOnInit(): void {
-    this.loadAnnouncements();
+    this.searchAnnouncements();
   }
 
   loadAnnouncements(): void {
-    this.announcementService.getAnnouncements().subscribe(
-      announcements => {
-        this.announcements = announcements;
-        this.filterAnnouncements();
-      },
-      error => this.errorMessage = 'Failed to load announcements'
-    );
+    this.searchAnnouncements(); // This will load all announcements initially
   }
 
   filterAnnouncements(): void {
     this.filteredAnnouncements = this.announcements.filter(announcement => {
       // Apply type filter
-      const typeMatch = this.selectedFilter === 'all' || 
-                       announcement.type.toLowerCase() === this.selectedFilter.toLowerCase();
-      
+      const typeMatch = this.selectedFilter === 'all' ||
+        announcement.type.toLowerCase() === this.selectedFilter.toLowerCase();
+
       // Apply search filter
-      const searchMatch = !this.searchQuery || 
-                         announcement.title.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-                         announcement.content.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                         announcement.author.toLowerCase().includes(this.searchQuery.toLowerCase());
-      
+      const searchMatch = !this.searchQuery ||
+        announcement.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        announcement.content.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        announcement.author.toLowerCase().includes(this.searchQuery.toLowerCase());
+
       return typeMatch && searchMatch;
     });
   }
 
   markAsRead(announcement: Announcement): void {
-    if (!announcement.read) {
+    if (!announcement.readStatus) {
       this.announcementService.markAsRead(announcement.id).subscribe(
         () => {
-          announcement.read = true;
+          announcement.readStatus = true;
         },
         error => this.errorMessage = 'Failed to mark announcement as read'
       );
     }
   }
-  getBadgeClass(type: string): string {
-    switch (type.toLowerCase()) {
-      case 'academic': return 'academic';
-      case 'event': return 'event';
-      case 'important': return 'important';
-      default: return 'general';
+  searchAnnouncements(): void {
+  this.isLoading = true;
+  
+  this.announcementService.searchAnnouncements(
+    this.searchQuery,
+    this.selectedFilter
+  ).subscribe({
+    next: (announcements) => {
+      this.filteredAnnouncements = announcements;
+      this.isLoading = false;
+    },
+    error: (error) => {
+      this.errorMessage = 'Failed to load announcements';
+      this.isLoading = false;
+      console.error(error);
     }
+  });
+}
+
+getBadgeClass(type: string): string {
+  if (!type) return 'General';
+  
+  // Convert to lowercase for case-insensitive comparison
+  const typeLower = type.toLowerCase();
+  
+  switch(typeLower) {
+    case 'academic': return 'Academic';
+    case 'event': return 'Event';
+    case 'important': return 'Important';
+    default: return 'General';
   }
+}
 }

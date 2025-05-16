@@ -7,7 +7,7 @@ export interface Announcement {
     author: string;
     date: string;
     type: AnnouncementType;
-    read: boolean;
+    readStatus: boolean;
     attachment?: {
         name: string;
         url: string;

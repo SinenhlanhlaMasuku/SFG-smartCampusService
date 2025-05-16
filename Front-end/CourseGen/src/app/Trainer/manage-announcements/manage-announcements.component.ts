@@ -18,9 +18,7 @@ export class ManageAnnouncementsComponent implements OnInit {
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
   }
-  getBadgeClass(arg0: string) {
-    throw new Error('Method not implemented.');
-  }
+
   announcements: Announcement[] = [];
   filteredAnnouncements: Announcement[] = [];
   announcementForm: FormGroup;
@@ -212,6 +210,17 @@ export class ManageAnnouncementsComponent implements OnInit {
   });
 }
 
-// Update ngOnInit to just call searchAnnouncements
-
+getBadgeClass(type: string): string {
+  if (!type) return 'General';
+  
+  // Convert to lowercase for case-insensitive comparison
+  const typeLower = type.toLowerCase();
+  
+  switch(typeLower) {
+    case 'academic': return 'Academic';
+    case 'event': return 'Event';
+    case 'important': return 'Important';
+    default: return 'General';
+  }
+}
 }

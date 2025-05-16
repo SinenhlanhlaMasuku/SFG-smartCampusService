@@ -139,25 +139,30 @@
             </span>
             <h4>{{ announcement.title }}</h4>
             <small class="text-muted">
-              Posted on {{ announcement.date | date:'mediumDate' }} |
-              {{ announcement.read || 0 }} reads
+              Posted on {{ announcement.date | date:'mediumDate' }}
             </small>
           </div>
           <div class="announcement-body">
             <p>{{ announcement.content }}</p>
             <div *ngIf="announcement.attachment" class="attachment">
               <i class="fas fa-paperclip"></i>
-              <a [href]="announcement.attachment.url" target="_blank">{{ announcement.attachment.name }}</a>
+              <a [href]="announcement.attachment.url" target="_blank">
+                {{ announcement.attachment.name }}
+              </a>
             </div>
           </div>
           <div class="announcement-actions">
-            <button class="btn btn-sm btn-primary" (click)="editAnnouncement(announcement)">Edit</button>
-            <button class="btn btn-sm btn-danger" (click)="deleteAnnouncement(announcement.id)">Delete</button>
+            <button class="btn btn-sm btn-primary" (click)="editAnnouncement(announcement)">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteAnnouncement(announcement.id)">
+              <i class="fas fa-trash"></i> Delete
+            </button>
           </div>
         </div>
 
         <div *ngIf="filteredAnnouncements.length === 0" class="alert alert-info">
-          No announcements match your criteria
+          No announcements found
         </div>
       </div>
     </div>

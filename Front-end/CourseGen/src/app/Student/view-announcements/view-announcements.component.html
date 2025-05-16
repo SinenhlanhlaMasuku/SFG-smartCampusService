@@ -50,56 +50,68 @@
     <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
     
     <div class="announcement-controls">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="filter">Filter by:</label>
-            <select id="filter" class="form-control" [(ngModel)]="selectedFilter" (change)="filterAnnouncements()">
-              <option value="all">All Announcements</option>
-              <option value="academic">Academic</option>
-              <option value="event">Events</option>
-              <option value="important">Important</option>
-              <option value="general">General</option>
-            </select>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="filter">Filter by type:</label>
+              <select id="filter" class="form-control" [(ngModel)]="selectedFilter" (change)="searchAnnouncements()">
+                <option value="all">All Announcements</option>
+                <option value="Academic">Academic</option>
+                <option value="Event">Events</option>
+                <option value="Important">Important</option>
+                <option value="General">General</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="search">Search:</label>
-            <input type="text" id="search" class="form-control" 
-                   [(ngModel)]="searchQuery" 
-                   (input)="filterAnnouncements()"
-                   placeholder="Search announcements...">
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="announcement-list">
-      <div *ngFor="let announcement of filteredAnnouncements" 
-           class="announcement-card" 
-           [class.unread]="!announcement.read"
-           (click)="markAsRead(announcement)">
-        <div class="announcement-header">
-          <span class="badge" [ngClass]="'badge-' + getBadgeClass(announcement.type)">
-            {{ announcement.type }}
-          </span>
-          <h4>{{ announcement.title }}</h4>
-          <small class="text-muted">
-            Posted by {{ announcement.author }} on {{ announcement.date | date:'mediumDate' }}
-          </small>
-        </div>
-        <div class="announcement-body">
-          <p>{{ announcement.content }}</p>
-          <div *ngIf="announcement.attachment" class="attachment">
-            <i class="fas fa-paperclip"></i>
-            <a [href]="announcement.attachment.url" target="_blank">{{ announcement.attachment.name }}</a>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="search">Search content:</label>
+              <div class="input-group">
+                <input type="text" id="search" class="form-control" [(ngModel)]="searchQuery"
+                  (keyup.enter)="searchAnnouncements()" placeholder="Search in titles and content...">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button" (click)="searchAnnouncements()" [disabled]="isLoading">
+                    <i class="fas fa-search"></i> Search
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
-      <div *ngIf="filteredAnnouncements.length === 0" class="alert alert-info">
-        No announcements match your criteria
+
+      <div class="announcement-list">
+        <div *ngFor="let announcement of filteredAnnouncements" class="announcement-card">
+          <div class="announcement-header">
+            <span class="badge" [ngClass]="'badge-' + getBadgeClass(announcement.type)">
+              {{ announcement.type }}
+            </span>
+            <h4>{{ announcement.title }}</h4>
+            <small class="text-muted">
+              Posted on {{ announcement.date | date:'mediumDate' }}
+            </small>
+          </div>
+          <div class="announcement-body">
+            <p>{{ announcement.content }}</p>
+            <div *ngIf="announcement.attachment" class="attachment">
+              <i class="fas fa-paperclip"></i>
+              <a [href]="announcement.attachment.url" target="_blank">
+                {{ announcement.attachment.name }}
+              </a>
+            </div>
+          </div>
+          <!-- <div class="announcement-actions">
+            <button class="btn btn-sm btn-primary" (click)="editAnnouncement(announcement)">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteAnnouncement(announcement.id)">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div> -->
+        </div>
+
+        <div *ngIf="filteredAnnouncements.length === 0" class="alert alert-info">
+          No announcements found
+        </div>
       </div>
-    </div>
   </div>
