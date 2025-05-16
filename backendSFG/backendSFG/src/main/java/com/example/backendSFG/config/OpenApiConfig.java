@@ -26,17 +26,17 @@ public class OpenApiConfig {
                         .description("Application for generating course content using OpenAIs GPTs"));
     }
 
-    @Configuration
-    public class WebConfig implements WebMvcConfigurer {
+    // @Configuration
+    // public class WebConfig implements WebMvcConfigurer {
 
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:4200")
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                    .allowedHeaders("*");
-        }
-    }
+    //     @Override
+    //     public void addCorsMappings(CorsRegistry registry) {
+    //         registry.addMapping("/**")
+    //                 .allowedOrigins("http://localhost:4200")
+    //                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+    //                 .allowedHeaders("*");
+    //     }
+    // }
 
     // @Bean
     // public ModelMapper modelMapper() {

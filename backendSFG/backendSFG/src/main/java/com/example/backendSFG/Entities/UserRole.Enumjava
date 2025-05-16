@@ -1,0 +1,7 @@
+package com.example.backendSFG.Entities;
+
+public enum UserRole {
+    ADMIN,
+    LECTURER,
+    STUDENT
+}

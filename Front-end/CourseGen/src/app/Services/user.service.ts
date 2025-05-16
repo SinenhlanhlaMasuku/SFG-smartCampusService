@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import { PendingUser, User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,16 @@ export class UserService {
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+getPendingUsers(): Observable<PendingUser[]> {
+    return this.http.get<PendingUser[]>(`${this.apiUrl}/pending`);
+  }
 
+  approveUser(userId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/approve/${userId}`, {});
+  }
+
+  rejectUser(userId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reject/${userId}`, {});
+  }
   // Add methods for fetching single user
 }

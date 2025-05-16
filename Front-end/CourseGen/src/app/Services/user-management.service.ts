@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { PendingDTO } from '../Admin/dtos/pending-dto.model';
 import { TrainerDTO } from '../Admin/dtos/TrainerDTO';
+import { PendingUser } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,41 +16,16 @@ export class UserManagementService {
   
   constructor(private http: HttpClient) {}
 
-   // Fetch trainers and update BehaviorSubject
-   fetchPendingTrainers(): Observable<PendingDTO[]> {
-    return this.http.get<PendingDTO[]>(`${this.apiUrl}/pending-trainers`).pipe(
-      tap((trainers) => this.pendingTrainersSubject.next(trainers))
-    );
+  getPendingUsers(): Observable<PendingUser[]> {
+    return this.http.get<PendingUser[]>(`${this.apiUrl}/pending`);
   }
 
-  // Fetch pending trainers
-  getPendingTrainers(): Observable<PendingDTO[]> {
-    return this.http.get<PendingDTO[]>(`${this.apiUrl}/pending-trainers`);
+  approveUser(userId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/approve/${userId}`, {});
   }
 
-
-  approveTrainer(userId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/approve-trainer/${userId}`, {}).pipe(
-      tap(() => this.fetchPendingTrainers().subscribe()) // Refresh trainers after approval
-    );
+  rejectUser(userId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reject/${userId}`, {});
   }
-
-  rejectTrainer(userId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reject-trainer/${userId}`, {}).pipe(
-      tap(() => this.fetchPendingTrainers().subscribe()) // Refresh trainers after rejection
-    );
-  }
-
-  updateTrainerStatus(email: string, status: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/update-status`, { email, status });
-}
-
-  
-  
-
-  getAllTrainers(): Observable<TrainerDTO[]> {
-    return this.http.get<TrainerDTO[]>(`${this.apiUrl}/AllTrainers`);
-  }
-
   
 }

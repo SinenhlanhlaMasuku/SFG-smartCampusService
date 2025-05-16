@@ -3,13 +3,17 @@ package com.example.backendSFG.Services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.example.backendSFG.Entities.StudentEntity;
 import com.example.backendSFG.Repositories.StudentRepository;
 
+@Service
 public class StudentService {
  @Autowired
     private StudentRepository studentRepository;
+    
 
     
     public StudentEntity registerStudent(String name, String surname, String email, String password) {
@@ -36,4 +40,6 @@ public class StudentService {
             throw new IllegalArgumentException("Email not found");
         }
     }
+
+   
 }

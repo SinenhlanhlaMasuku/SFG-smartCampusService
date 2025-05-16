@@ -42,30 +42,38 @@
       </div>
     
       <div class="sub-header" [class.shifted]="isCollapsed">
-        <h3 class="sub-heading">USER ACCEPTANCE</h3>
-        <button class="back-button" routerLink="/admin-dashboard">
-          <span class="icon"></span> Back </button>
-      </div>
+    <h3 class="sub-heading">USER MANAGEMENT</h3>
+    <button class="back-button" routerLink="/admin-dashboard">
+      <span class="icon"></span> Back 
+    </button>
+  </div>
 
-      <div class="dash-container-1" [class.shifted]="isCollapsed">
-
-        <div class="container-2">
-          <div class="overlay" *ngIf="isLoading">
-            <div class="overlay-content">
-              <p>{{ loadingMessage }}</p>
-              <div class="spinner"></div>
-            </div>
-          </div>
-          
+  <div class="dash-container-1" [class.shifted]="isCollapsed">
     <div class="container-2">
-      <div *ngFor="let trainer of pendingTrainers" class="u-card">
-        <h3>{{ trainer.name }} {{ trainer.surname }}</h3>
-        <h5>{{ trainer.email }}</h5>
-        <button class="accept-btn" (click)="approveTrainer(trainer.userId)">Accept</button>
-        <button class="reject-btn" (click)="rejectTrainer(trainer.userId)">Reject</button>
+      <div class="overlay" *ngIf="isLoading">
+        <div class="overlay-content">
+          <p>{{ loadingMessage }}</p>
+          <div class="spinner"></div>
+        </div>
       </div>
       
+      <div class="user-list">
+        <div *ngFor="let user of pendingUsers" class="user-card">
+          <div class="user-info">
+            <h3>{{ user.name }} {{ user.surname }}</h3>
+            <p class="email">{{ user.email }}</p>
+            <p class="role">{{ user.role | titlecase }}</p>
+          </div>
+          <div class="user-actions">
+            <button class="accept-btn" (click)="approveUser(user.id)">Approve</button>
+            <button class="reject-btn" (click)="rejectUser(user.id)">Reject</button>
+          </div>
+        </div>
+        
+        <div *ngIf="pendingUsers.length === 0" class="no-users">
+          <p>No pending users to review</p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-  
+</div>`

@@ -9,7 +9,7 @@ import com.example.backendSFG.Model.*;
 import com.example.backendSFG.Services.*;
 
 @RestController
-@RequestMapping("/Admin")
+@RequestMapping("api/Admin")
 @CrossOrigin(origins = "http://localhost:4200")
 public class AdminController {
  

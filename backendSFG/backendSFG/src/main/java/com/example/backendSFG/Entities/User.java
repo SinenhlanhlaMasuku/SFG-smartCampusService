@@ -16,10 +16,15 @@ import lombok.*;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String surname;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -34,11 +39,12 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private UserRole role;
 
+    @Column(nullable = false)
+    private boolean approved = false; // New field to track approval status
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(
-            new SimpleGrantedAuthority(role.getAuthority())
-        );
+        return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
