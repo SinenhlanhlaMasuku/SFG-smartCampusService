@@ -13,7 +13,6 @@ import { ForgotPasswordComponent } from './Trainer/forgot-password/forgot-passwo
 import { ProfileManagementComponent } from './profile-management/profile-management.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserManagementComponent } from './Admin/admin-dashboard/user-management/user-management.component';
-import { ViewUsersComponent } from './Admin/view-users/view-users.component';
 import { AddEventComponent } from './Admin/add-event/add-event.component';
 import { CalendarComponent } from './Admin/calendar/calendar.component';
 import { StdLoginComponent } from './Student/std-login/std-login.component';
@@ -44,7 +43,7 @@ import { CommonModule } from '@angular/common';
     ProfileManagementComponent,
  
     UserManagementComponent,
-    ViewUsersComponent,
+
     ViewBookingComponent,
  
     AddEventComponent,

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
@@ -76,4 +77,26 @@ public class AnnouncementController {
     public List<Announcement> getAnnouncementsByGroup(@PathVariable String group) {
         return announcementService.getAnnouncementsByGroup(group);
     }
+
+    @GetMapping("/search")
+public ResponseEntity<List<Announcement>> searchAnnouncements(
+    @RequestParam(required = false) String query,
+    @RequestParam(required = false) String type) {
+    
+    try {
+        List<Announcement> announcements;
+        
+        if (query != null && !query.isEmpty()) {
+            announcements = announcementService.searchAnnouncements(query, type);
+        } else if (type != null && !type.isEmpty() && !type.equalsIgnoreCase("all")) {
+            announcements = announcementService.getAnnouncementsByType(type);
+        } else {
+            announcements = announcementService.getAllAnnouncements();
+        }
+        
+        return ResponseEntity.ok(announcements);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+}
 }

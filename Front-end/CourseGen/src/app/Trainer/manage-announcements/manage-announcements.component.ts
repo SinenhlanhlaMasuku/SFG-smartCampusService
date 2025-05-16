@@ -12,6 +12,8 @@ import { AuthService } from '../../Services/auth.service';
 export class ManageAnnouncementsComponent implements OnInit {
   isCollapsed = true;
   isLoading: boolean = false;
+  searchQuery: string = '';
+  searchTimeout: any;
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
@@ -26,7 +28,6 @@ export class ManageAnnouncementsComponent implements OnInit {
   currentAnnouncementId: string | null = null;
   errorMessage: string = '';
   successMessage: string = '';
-  searchQuery: string = '';
   selectedFilter: string = 'all';
   attachmentFile: File | null = null;
 
@@ -44,39 +45,52 @@ export class ManageAnnouncementsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAnnouncements();
-  }
+  this.searchAnnouncements();
+}
 
   loadAnnouncements(): void {
-  const currentUser = this.authService.getCurrentUser();
-  if (!currentUser) {
-    this.errorMessage = 'Not authenticated';
-    return;
-  }
-
-  this.isLoading = true;
-  this.announcementService.getLecturerAnnouncements(currentUser.id).subscribe({
-    next: (announcements) => {
-      this.announcements = announcements;
-      this.filterAnnouncements();
-      this.isLoading = false;
-    },
-    error: (error) => {
-      this.errorMessage = 'Failed to load announcements';
-      this.isLoading = false;
-      console.error(error);
-    }
-  });
+  this.searchAnnouncements(); // This will load all announcements initially
 }
 
   filterAnnouncements(): void {
+  // Clear any existing timeout
+  clearTimeout(this.searchTimeout);
+  
+  // Set a new timeout to debounce the search
+  this.searchTimeout = setTimeout(() => {
+    if (!this.searchQuery) {
+      // If no search query, show all announcements filtered by type
+      this.filteredAnnouncements = this.announcements.filter(announcement => 
+        this.selectedFilter === 'all' || 
+        announcement.type.toLowerCase() === this.selectedFilter.toLowerCase()
+      );
+      return;
+    }
+
+    const query = this.searchQuery.toLowerCase().trim();
+    this.filteredAnnouncements = this.announcements.filter(announcement => {
+      const matchesType = this.selectedFilter === 'all' || 
+                         announcement.type.toLowerCase() === this.selectedFilter.toLowerCase();
+      
+      const matchesSearch = announcement.title.toLowerCase().includes(query) || 
+                          announcement.content.toLowerCase().includes(query) ||
+                          (announcement.author && announcement.author.toLowerCase().includes(query));
+      
+      return matchesType && matchesSearch;
+    });
+  }, 300); // 300ms delay for debouncing
+
+    // Perform search when there's a query
+    const query = this.searchQuery.toLowerCase().trim();
     this.filteredAnnouncements = this.announcements.filter(announcement => {
       const typeMatch = this.selectedFilter === 'all' ||
         announcement.type.toLowerCase() === this.selectedFilter.toLowerCase();
-      const searchMatch = !this.searchQuery ||
-        announcement.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        announcement.content.toLowerCase().includes(this.searchQuery.toLowerCase());
-      return typeMatch && searchMatch;
+
+      const titleMatch = announcement.title.toLowerCase().includes(query);
+      const contentMatch = announcement.content.toLowerCase().includes(query);
+      const authorMatch = announcement.author.toLowerCase().includes(query);
+
+      return typeMatch && (titleMatch || contentMatch || authorMatch);
     });
   }
 
@@ -178,4 +192,26 @@ export class ManageAnnouncementsComponent implements OnInit {
     const fileInput = document.getElementById('attachment') as HTMLInputElement;
     if (fileInput) fileInput.value = '';
   }
+
+  searchAnnouncements(): void {
+  this.isLoading = true;
+  
+  this.announcementService.searchAnnouncements(
+    this.searchQuery,
+    this.selectedFilter
+  ).subscribe({
+    next: (announcements) => {
+      this.filteredAnnouncements = announcements;
+      this.isLoading = false;
+    },
+    error: (error) => {
+      this.errorMessage = 'Failed to load announcements';
+      this.isLoading = false;
+      console.error(error);
+    }
+  });
+}
+
+// Update ngOnInit to just call searchAnnouncements
+
 }

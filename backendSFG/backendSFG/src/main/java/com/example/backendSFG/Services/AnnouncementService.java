@@ -1,6 +1,7 @@
 package com.example.backendSFG.Services;
 
 import com.example.backendSFG.Entities.Announcement;
+import com.example.backendSFG.Entities.Announcement.AnnouncementType;
 import com.example.backendSFG.Repositories.AnnouncementRepository;
 import com.example.backendSFG.config.FileStorageProperties;
 
@@ -110,4 +111,35 @@ public class AnnouncementService {
     public List<Announcement> getAnnouncementsByGroup(String group) {
         return announcementRepository.findByTargetGroupsContaining(group);
     }
+
+    public List<Announcement> searchAnnouncements(String query, String type, String authorId) {
+    String searchQuery = "%" + query.toLowerCase() + "%";
+    
+    return announcementRepository.findByAuthorAndSearchQuery(
+        authorId,
+        searchQuery,
+        type != null ? AnnouncementType.fromDisplayName(type) : null
+    );
+}
+
+public List<Announcement> searchAnnouncements(String query, String type) {
+    String searchQuery = "%" + query.toLowerCase() + "%";
+    AnnouncementType announcementType = type != null ? 
+        AnnouncementType.fromDisplayName(type) : null;
+    
+    return announcementRepository.findBySearchQuery(
+        searchQuery,
+        announcementType
+    );
+}
+
+public List<Announcement> getAnnouncementsByType(String type) {
+    return announcementRepository.findByType(
+        AnnouncementType.fromDisplayName(type)
+    );
+}
+
+public List<Announcement> getAllAnnouncements() {
+    return announcementRepository.findAll();
+}
 }

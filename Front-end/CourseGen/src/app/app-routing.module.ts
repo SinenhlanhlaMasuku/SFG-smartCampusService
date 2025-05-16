@@ -8,7 +8,6 @@ import { AdminDashboardComponent } from './Admin/admin-dashboard/admin-dashboard
 import { ForgotPasswordComponent } from './Trainer/forgot-password/forgot-password.component';
 import { ProfileManagementComponent } from './profile-management/profile-management.component';
 import { UserManagementComponent } from './Admin/admin-dashboard/user-management/user-management.component';
-import { ViewUsersComponent } from './Admin/view-users/view-users.component';
 
 import { AddEventComponent } from './Admin/add-event/add-event.component';
 import { CalendarComponent } from './Admin/calendar/calendar.component';
@@ -35,7 +34,7 @@ const routes: Routes = [
   { path: 'admin-login', component: AdminLoginComponent },
   { path: 'profile-management', component: ProfileManagementComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent },
-  { path: 'view-users', component: ViewUsersComponent },
+
   { path: 'user-management', component: UserManagementComponent },
   { path: 'lecturer-dashboard', component: LecturerDashboardComponent }, // Assuming this is the correct path for the lecturer dashboard
   {path: 'add-event', component: AddEventComponent},

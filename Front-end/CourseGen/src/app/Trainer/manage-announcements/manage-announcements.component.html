@@ -1,18 +1,18 @@
-<div class="admin-dashboard-container"style="background-color:  #e4e9ef;">
-    <div class="top-nav">
-      <div class="logo">
-        <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
-      </div>
-      <div class="nav-right">
-        <button class="profile-btn">
-          <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
-        </button>
-      </div>
+<div class="admin-dashboard-container" style="background-color:  #e4e9ef;">
+  <div class="top-nav">
+    <div class="logo">
+      <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
     </div>
-    
-    <div class="body">
-      <div class="sidebar" [class.collapsed]="isCollapsed">
-        <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+    <div class="nav-right">
+      <button class="profile-btn">
+        <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
+      </button>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sidebar" [class.collapsed]="isCollapsed">
+      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
       <ul>
         <li>
           <i class="icon fa fa-home"></i>
@@ -29,7 +29,7 @@
         <li>
           <i class="icon fas fa-file-alt"></i>
           <span *ngIf="!isCollapsed" routerLink="#">Book a Lab</span>
-      </li>
+        </li>
         <hr class="divider" />
         <li>
 
@@ -38,122 +38,126 @@
         </li>
       </ul>
     </div>
-     <div class="sub-header" [class.shifted]="isCollapsed">
-        <h3 class="sub-heading">MANAGE ANNOUNCEMENTS</h3>
-        <button class="back-button" routerLink="/lecturer-dashboard">
-          <span class="icon"></span> Back </button>
+    <div class="sub-header" [class.shifted]="isCollapsed">
+      <h3 class="sub-heading">MANAGE ANNOUNCEMENTS</h3>
+      <button class="back-button" routerLink="/lecturer-dashboard">
+        <span class="icon"></span> Back </button>
+    </div>
+
+    <div class="manage-announcements-container" style="padding-top: 10%;width: 90%;padding-left: 20%;">
+      <h2>Manage Announcements</h2>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+      <div class="announcement-form">
+        <h3>{{ isEditing ? 'Edit Announcement' : 'Create New Announcement' }}</h3>
+        <form [formGroup]="announcementForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" class="form-control" formControlName="title">
+          </div>
+
+          <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" class="form-control" formControlName="content" rows="5"></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="type">Type</label>
+                <select id="type" class="form-control" formControlName="type">
+                  <option value="General">General</option>
+                  <option value="Academic">Academic</option>
+                  <option value="Event">Event</option>
+                  <option value="Important">Important</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="attachment">Attachment (optional)</label>
+                <div class="custom-file">
+                  <input type="file" id="attachment" class="custom-file-input" (change)="onFileSelected($event)">
+                  <label class="custom-file-label" for="attachment">
+                    {{ announcementForm.get('attachmentName')?.value || 'Choose file' }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              {{ isEditing ? 'Update' : 'Publish' }} Announcement
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="resetForm()" *ngIf="isEditing">
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
 
-<div class="manage-announcements-container" style="padding-top: 10%;width: 90%;padding-left: 20%;">
-    <h2>Manage Announcements</h2>
-    
-    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
-    
-    <div class="announcement-form">
-      <h3>{{ isEditing ? 'Edit Announcement' : 'Create New Announcement' }}</h3>
-      <form [formGroup]="announcementForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" id="title" class="form-control" formControlName="title">
-        </div>
-        
-        <div class="form-group">
-          <label for="content">Content</label>
-          <textarea id="content" class="form-control" formControlName="content" rows="5"></textarea>
-        </div>
-        
+      <div class="announcement-controls">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="type">Type</label>
-              <select id="type" class="form-control" formControlName="type">
-                <option value="General">General</option>
+              <label for="filter">Filter by type:</label>
+              <select id="filter" class="form-control" [(ngModel)]="selectedFilter" (change)="searchAnnouncements()">
+                <option value="all">All Announcements</option>
                 <option value="Academic">Academic</option>
-                <option value="Event">Event</option>
+                <option value="Event">Events</option>
                 <option value="Important">Important</option>
+                <option value="General">General</option>
               </select>
             </div>
           </div>
-          
           <div class="col-md-6">
             <div class="form-group">
-              <label for="attachment">Attachment (optional)</label>
-              <div class="custom-file">
-                <input type="file" id="attachment" class="custom-file-input" 
-                       (change)="onFileSelected($event)">
-                <label class="custom-file-label" for="attachment">
-                  {{ announcementForm.get('attachmentName')?.value || 'Choose file' }}
-                </label>
+              <label for="search">Search content:</label>
+              <div class="input-group">
+                <input type="text" id="search" class="form-control" [(ngModel)]="searchQuery"
+                  (keyup.enter)="searchAnnouncements()" placeholder="Search in titles and content...">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button" (click)="searchAnnouncements()" [disabled]="isLoading">
+                    <i class="fas fa-search"></i> Search
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">
-            {{ isEditing ? 'Update' : 'Publish' }} Announcement
-          </button>
-          <button type="button" class="btn btn-secondary" (click)="resetForm()" *ngIf="isEditing">
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
-    
-    <div class="announcement-controls">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="filter">Filter by:</label>
-            <select id="filter" class="form-control" [(ngModel)]="selectedFilter" (change)="filterAnnouncements()">
-              <option value="all">All Announcements</option>
-              <option value="academic">Academic</option>
-              <option value="event">Events</option>
-              <option value="important">Important</option>
-              <option value="general">General</option>
-            </select>
+      </div>
+
+      <div class="announcement-list">
+        <div *ngFor="let announcement of filteredAnnouncements" class="announcement-card">
+          <div class="announcement-header">
+            <span class="badge" [ngClass]="'badge-' + getBadgeClass(announcement.type)">
+              {{ announcement.type }}
+            </span>
+            <h4>{{ announcement.title }}</h4>
+            <small class="text-muted">
+              Posted on {{ announcement.date | date:'mediumDate' }} |
+              {{ announcement.read || 0 }} reads
+            </small>
+          </div>
+          <div class="announcement-body">
+            <p>{{ announcement.content }}</p>
+            <div *ngIf="announcement.attachment" class="attachment">
+              <i class="fas fa-paperclip"></i>
+              <a [href]="announcement.attachment.url" target="_blank">{{ announcement.attachment.name }}</a>
+            </div>
+          </div>
+          <div class="announcement-actions">
+            <button class="btn btn-sm btn-primary" (click)="editAnnouncement(announcement)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteAnnouncement(announcement.id)">Delete</button>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="search">Search:</label>
-            <input type="text" id="search" class="form-control" 
-                   [(ngModel)]="searchQuery" 
-                   (input)="filterAnnouncements()"
-                   placeholder="Search announcements...">
-          </div>
+
+        <div *ngIf="filteredAnnouncements.length === 0" class="alert alert-info">
+          No announcements match your criteria
         </div>
       </div>
     </div>
-    
-    <div class="announcement-list">
-      <div *ngFor="let announcement of filteredAnnouncements" class="announcement-card">
-        <div class="announcement-header">
-          <span class="badge" [ngClass]="'badge-' + getBadgeClass(announcement.type)">
-            {{ announcement.type }}
-          </span>
-          <h4>{{ announcement.title }}</h4>
-          <small class="text-muted">
-            Posted on {{ announcement.date | date:'mediumDate' }} | 
-            {{ announcement.read || 0 }} reads
-          </small>
-        </div>
-        <div class="announcement-body">
-          <p>{{ announcement.content }}</p>
-          <div *ngIf="announcement.attachment" class="attachment">
-            <i class="fas fa-paperclip"></i>
-            <a [href]="announcement.attachment.url" target="_blank">{{ announcement.attachment.name }}</a>
-          </div>
-        </div>
-        <div class="announcement-actions">
-          <button class="btn btn-sm btn-primary" (click)="editAnnouncement(announcement)">Edit</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteAnnouncement(announcement.id)">Delete</button>
-        </div>
-      </div>
-      
-      <div *ngIf="filteredAnnouncements.length === 0" class="alert alert-info">
-        No announcements match your criteria
-      </div>
-    </div>
-  </div>

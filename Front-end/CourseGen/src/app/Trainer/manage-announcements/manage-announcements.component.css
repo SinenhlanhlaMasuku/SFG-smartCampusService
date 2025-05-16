@@ -79,3 +79,28 @@
   .custom-file-label::after {
     content: "Browse";
   }
+  /* manage-announcements.component.css */
+/* manage-announcements.component.css */
+.input-group {
+  width: 100%;
+}
+
+.input-group-append .btn {
+  border: 1px solid #ced4da;
+  border-left: none;
+  background-color: #f8f9fa;
+  height: calc(1.5em + 0.75rem + 2px); /* Match input height */
+}
+
+.input-group-append .btn:hover {
+  background-color: #e9ecef;
+}
+
+.input-group-append .btn i {
+  color: #495057;
+}
+
+/* Ensure input and button align properly */
+.form-control {
+  border-right: none;
+}
