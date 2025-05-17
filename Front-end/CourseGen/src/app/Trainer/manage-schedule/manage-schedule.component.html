@@ -1,18 +1,18 @@
-<div class="admin-dashboard-container"style="background-color:  #e4e9ef;">
-    <div class="top-nav">
-      <div class="logo">
-        <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
-      </div>
-      <div class="nav-right">
-        <button class="profile-btn">
-          <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
-        </button>
-      </div>
+<div class="admin-dashboard-container" style="background-color:  #e4e9ef;">
+  <div class="top-nav">
+    <div class="logo">
+      <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
     </div>
-    
-    <div class="body">
-      <div class="sidebar" [class.collapsed]="isCollapsed">
-        <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+    <div class="nav-right">
+      <button class="profile-btn">
+        <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
+      </button>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sidebar" [class.collapsed]="isCollapsed">
+      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
       <ul>
         <li>
           <i class="icon fa fa-home"></i>
@@ -27,9 +27,15 @@
           <span *ngIf="!isCollapsed" routerLink="/manage-announcements">Manage Announcement</span>
         </li>
         <li>
+          <i class="icon fas fa-book"></i>
+          <a *ngIf="!isCollapsed" routerLink="/lecturer-time-tables">
+            <span>View Time Tables</span>
+          </a>
+        </li>
+        <li>
           <i class="icon fas fa-file-alt"></i>
           <span *ngIf="!isCollapsed" routerLink="/view-content">Book a Lab</span>
-      </li>
+        </li>
         <hr class="divider" />
         <li>
 
@@ -38,145 +44,144 @@
         </li>
       </ul>
     </div>
-     <div class="sub-header" [class.shifted]="isCollapsed">
-        <h3 class="sub-heading">MANAGE SCHEDULES</h3>
-        <button class="back-button" routerLink="/lecturer-dashboard">
-          <span class="icon"></span> Back </button>
+    <div class="sub-header" [class.shifted]="isCollapsed">
+      <h3 class="sub-heading">MANAGE SCHEDULES</h3>
+      <button class="back-button" routerLink="/lecturer-dashboard">
+        <span class="icon"></span> Back </button>
+    </div>
+
+    <div class="container mt-4" style="padding-top: 10%;width: 90%;padding-left: 10%;">
+      <div class="card">
+        <div class="card-header">
+          <h3>{{ isEditing ? 'Edit Schedule' : 'Add New Schedule' }}</h3>
+        </div>
+        <div class="card-body">
+          <form #scheduleForm="ngForm" (ngSubmit)="onSubmit(scheduleForm)">
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="courseCode">Course Code</label>
+                  <input type="text" class="form-control" id="courseCode" [(ngModel)]="currentSchedule.courseCode"
+                    name="courseCode" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="courseName">Course Name</label>
+                  <input type="text" class="form-control" id="courseName" [(ngModel)]="currentSchedule.courseName"
+                    name="courseName" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="day">Day</label>
+                  <select class="form-control" id="day" [(ngModel)]="currentSchedule.day" name="day" required>
+                    <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="startTime">Start Time</label>
+                  <input type="time" class="form-control" id="startTime" [(ngModel)]="currentSchedule.startTime"
+                    name="startTime" required>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="endTime">End Time</label>
+                  <input type="time" class="form-control" id="endTime" [(ngModel)]="currentSchedule.endTime"
+                    name="endTime" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="location">Location</label>
+                  <input type="text" class="form-control" id="location" [(ngModel)]="currentSchedule.location"
+                    name="location" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="instructor">Instructor</label>
+                  <input type="text" class="form-control" id="instructor" [(ngModel)]="currentSchedule.instructor"
+                    name="instructor" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="officeHours">Office Hours (Optional)</label>
+              <input type="text" class="form-control" id="officeHours" [(ngModel)]="currentSchedule.officeHours"
+                name="officeHours">
+            </div>
+
+            <button type="submit" class="btn btn-primary mr-2" [disabled]="isLoading">
+              <span *ngIf="!isLoading">{{ isEditing ? 'Update' : 'Save' }}</span>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="resetForm(scheduleForm)" [disabled]="isLoading">
+              Cancel
+            </button>
+          </form>
+        </div>
       </div>
 
-<div class="container mt-4"style="padding-top: 10%;width: 90%;padding-left: 10%;">
-  <div class="card">
-    <div class="card-header">
-      <h3>{{ isEditing ? 'Edit Schedule' : 'Add New Schedule' }}</h3>
-    </div>
-    <div class="card-body">
-      <form #scheduleForm="ngForm" (ngSubmit)="onSubmit(scheduleForm)">
-        <div *ngIf="errorMessage" class="alert alert-danger">
-          {{ errorMessage }}
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3>Schedule List</h3>
         </div>
+        <div class="card-body">
+          <div *ngIf="isLoading && schedules.length === 0" class="text-center">
+            <div class="spinner-border text-primary"></div>
+            <p>Loading schedules...</p>
+          </div>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="courseCode">Course Code</label>
-              <input type="text" class="form-control" id="courseCode" 
-                     [(ngModel)]="currentSchedule.courseCode" name="courseCode" required>
-            </div>
+          <div *ngIf="schedules.length === 0 && !isLoading" class="alert alert-info">
+            No schedules found.
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="courseName">Course Name</label>
-              <input type="text" class="form-control" id="courseName" 
-                     [(ngModel)]="currentSchedule.courseName" name="courseName" required>
-            </div>
-          </div>
+
+          <table *ngIf="schedules.length > 0" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Location</th>
+                <th>Instructor</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let schedule of schedules">
+                <td>{{ schedule.courseCode }}</td>
+                <td>{{ schedule.courseName }}</td>
+                <td>{{ schedule.day }}</td>
+                <td>{{ schedule.startTime }} - {{ schedule.endTime }}</td>
+                <td>{{ schedule.location }}</td>
+                <td>{{ schedule.instructor }}</td>
+                <td>
+                  <button class="btn btn-sm btn-warning mr-2" (click)="editSchedule(schedule)">
+                    <i class="fas fa-edit"></i> Edit
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteSchedule(schedule.id!)">
+                    <i class="fas fa-trash"></i> Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="day">Day</label>
-              <select class="form-control" id="day" 
-                      [(ngModel)]="currentSchedule.day" name="day" required>
-                <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="startTime">Start Time</label>
-              <input type="time" class="form-control" id="startTime" 
-                     [(ngModel)]="currentSchedule.startTime" name="startTime" required>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="endTime">End Time</label>
-              <input type="time" class="form-control" id="endTime" 
-                     [(ngModel)]="currentSchedule.endTime" name="endTime" required>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="location">Location</label>
-              <input type="text" class="form-control" id="location" 
-                     [(ngModel)]="currentSchedule.location" name="location" required>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="instructor">Instructor</label>
-              <input type="text" class="form-control" id="instructor" 
-                     [(ngModel)]="currentSchedule.instructor" name="instructor" required>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="officeHours">Office Hours (Optional)</label>
-          <input type="text" class="form-control" id="officeHours" 
-                 [(ngModel)]="currentSchedule.officeHours" name="officeHours">
-        </div>
-
-        <button type="submit" class="btn btn-primary mr-2" [disabled]="isLoading">
-          <span *ngIf="!isLoading">{{ isEditing ? 'Update' : 'Save' }}</span>
-          <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
-        </button>
-        <button type="button" class="btn btn-secondary" (click)="resetForm(scheduleForm)" [disabled]="isLoading">
-          Cancel
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <div class="card mt-4">
-    <div class="card-header">
-      <h3>Schedule List</h3>
-    </div>
-    <div class="card-body">
-      <div *ngIf="isLoading && schedules.length === 0" class="text-center">
-        <div class="spinner-border text-primary"></div>
-        <p>Loading schedules...</p>
       </div>
-
-      <div *ngIf="schedules.length === 0 && !isLoading" class="alert alert-info">
-        No schedules found.
-      </div>
-
-      <table *ngIf="schedules.length > 0" class="table table-striped">
-        <thead>
-          <tr>
-            <th>Course Code</th>
-            <th>Course Name</th>
-            <th>Day</th>
-            <th>Time</th>
-            <th>Location</th>
-            <th>Instructor</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let schedule of schedules">
-            <td>{{ schedule.courseCode }}</td>
-            <td>{{ schedule.courseName }}</td>
-            <td>{{ schedule.day }}</td>
-            <td>{{ schedule.startTime }} - {{ schedule.endTime }}</td>
-            <td>{{ schedule.location }}</td>
-            <td>{{ schedule.instructor }}</td>
-            <td>
-              <button class="btn btn-sm btn-warning mr-2" (click)="editSchedule(schedule)">
-                <i class="fas fa-edit"></i> Edit
-              </button>
-              <button class="btn btn-sm btn-danger" (click)="deleteSchedule(schedule.id!)">
-                <i class="fas fa-trash"></i> Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
-  </div>
-</div>

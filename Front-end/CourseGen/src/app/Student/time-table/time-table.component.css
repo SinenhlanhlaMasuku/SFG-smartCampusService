@@ -1,0 +1,121 @@
+.time-table-container {
+  padding: 20px;
+  margin-left: 250px;
+  transition: margin-left 0.3s;
+}
+
+.time-table-container.shifted {
+  margin-left: 60px;
+}
+
+.filter-section {
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.time-table-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.time-table-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.time-table-header {
+  padding: 15px 20px;
+  background: #007bff;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.time-table-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.time-table-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.date-range {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.download-btn {
+  background: white;
+  color: #007bff;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.2s;
+}
+
+.download-btn:hover {
+  background: #f0f0f0;
+}
+
+.download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.time-table-body {
+  padding: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .time-table-container {
+    margin-left: 0;
+    padding: 10px;
+  }
+  
+  .time-table-container.shifted {
+    margin-left: 0;
+  }
+  
+  .time-table-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

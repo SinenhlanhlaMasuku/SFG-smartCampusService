@@ -28,6 +28,8 @@ import { ViewBookingComponent } from './Admin/view-bookings/view-bookings.compon
 import { AnalyzeDataComponent } from './Admin/analyze-data/analyze-data.component';
 import { UsersComponent } from './Admin/users/users.component';
 import { CommonModule } from '@angular/common';
+import { TimeTableComponent } from './Student/time-table/time-table.component';
+import { LecturerTimeTableComponent } from './Trainer/lecturer-time-table/lecturer-time-table.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { CommonModule } from '@angular/common';
     ManageAnnouncementsComponent,
     AnalyzeDataComponent,
     UsersComponent,
+    TimeTableComponent,
+    LecturerTimeTableComponent,
     
   ],
   imports: [

@@ -1,0 +1,106 @@
+<div class="admin-dashboard-container" style="background-color: #e4e9ef;">
+  <div class="top-nav">
+    <div class="logo">
+      <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
+    </div>
+    <div class="nav-right">
+      <button class="profile-btn">
+        <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
+      </button>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sidebar" [class.collapsed]="isCollapsed">
+      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+      <ul>
+        <li>
+          <i class="icon fa fa-home"></i>
+          <span *ngIf="!isCollapsed" routerLink="/std-dashboard">Dashboard</span>
+        </li>
+     <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/book-rooms">Book a Room</span>
+        </li>
+        <li>
+          <i class="icon fas fa-file-alt"></i>
+          <span *ngIf="!isCollapsed" routerLink="/view-announcements">View Announcement</span>
+      </li>
+      <li>
+        <i class="icon fas fa-book"></i>
+        <span *ngIf="!isCollapsed" routerLink="/view-schedule">View Schedule</span>
+    </li>
+    <li>
+        <i class="icon fas fa-file-alt"></i>
+        <span *ngIf="!isCollapsed" routerLink="/time-table">View Time Table</span>
+    </li>
+        <hr class="divider" />
+        <li>
+          <i class="icon fas fa-sign-out-alt"></i>
+          <span class="logout-link" routerLink="/landing-page" *ngIf="!isCollapsed">Logout</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sub-header" [class.shifted]="isCollapsed">
+      <h3 class="sub-heading">ACADEMIC TIME TABLES</h3>
+      <button class="back-button" routerLink="/std-dashboard">
+        <span class="icon"></span> Back
+      </button>
+    </div>
+
+    <div class="time-table-container" [class.shifted]="isCollapsed">
+      <div class="filter-section">
+        <div class="form-group">
+          <label for="department">Select Department:</label>
+          <select id="department" class="form-control" 
+                  [(ngModel)]="selectedDepartment" 
+                  (change)="filterByDepartment()">
+            <option value="">All Departments</option>
+            <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="time-table-list">
+        <div *ngFor="let timeTable of filteredTimeTables" class="time-table-card">
+          <div class="time-table-header">
+            <h3>{{ timeTable.department }}</h3>
+            <h4>{{ timeTable.semester }}</h4>
+            <p class="date-range">
+              {{ timeTable.startDate | date }} to {{ timeTable.endDate | date }}
+            </p>
+            <button class="download-btn" (click)="downloadTimeTable(timeTable)" [disabled]="isLoading">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+
+          <div class="time-table-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Day</th>
+                  <th>Time</th>
+                  <th>Room</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let subject of timeTable.subjects">
+                  <td>{{ subject.name }}</td>
+                  <td>{{ subject.day }}</td>
+                  <td>{{ subject.time }}</td>
+                  <td>{{ subject.room }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div *ngIf="filteredTimeTables.length === 0" class="no-results">
+          <p>No time tables found for the selected department.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,18 +18,23 @@
           <i class="icon fa fa-home"></i>
           <span *ngIf="!isCollapsed">Dashboard</span>
         </li>
-      <li>
+       <li>
           <i class="icon fas fa-book"></i>
-          <span *ngIf="!isCollapsed" routerLink="/view-schedule">View Schedule</span>
-        </li>
-        <li>
-          <i class="icon fas fa-book"></i>
-          <span *ngIf="!isCollapsed" routerLink="/view-announcements">View Announcement</span>
+          <span *ngIf="!isCollapsed" routerLink="/book-rooms">Book a Room</span>
         </li>
         <li>
           <i class="icon fas fa-file-alt"></i>
-          <span *ngIf="!isCollapsed" routerLink="/book-rooms">Book a Lab</span>
+          <span *ngIf="!isCollapsed" routerLink="/view-announcements">View Announcement</span>
       </li>
+      <li>
+        <i class="icon fas fa-book"></i>
+        <span *ngIf="!isCollapsed" routerLink="/view-schedule">View Schedule</span>
+    </li>
+    <li>
+        <i class="icon fas fa-file-alt"></i>
+        <span *ngIf="!isCollapsed" routerLink="/time-table">View Time Table</span>
+    </li>
+       
         <hr class="divider" />
         <li>
     

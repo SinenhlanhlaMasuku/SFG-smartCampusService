@@ -23,6 +23,8 @@ import { ViewBookingComponent } from './Admin/view-bookings/view-bookings.compon
 import { AnalyzeDataComponent } from './Admin/analyze-data/analyze-data.component';
 import { UsersComponent } from './Admin/users/users.component';
 import { ManageScheduleComponent } from './Trainer/manage-schedule/manage-schedule.component';
+import { TimeTableComponent } from './Student/time-table/time-table.component';
+import { LecturerTimeTableComponent } from './Trainer/lecturer-time-table/lecturer-time-table.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent }, // Default landing page
@@ -34,7 +36,8 @@ const routes: Routes = [
   { path: 'admin-login', component: AdminLoginComponent },
   { path: 'profile-management', component: ProfileManagementComponent },
   { path: 'admin-dashboard', component: AdminDashboardComponent },
-
+  { path: 'time-table', component: TimeTableComponent },
+ { path: 'lecturer-time-tables', component: LecturerTimeTableComponent },
   { path: 'user-management', component: UserManagementComponent },
   { path: 'lecturer-dashboard', component: LecturerDashboardComponent }, // Assuming this is the correct path for the lecturer dashboard
   {path: 'add-event', component: AddEventComponent},

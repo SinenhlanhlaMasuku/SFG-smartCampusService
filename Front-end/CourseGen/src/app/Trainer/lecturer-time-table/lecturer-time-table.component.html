@@ -1,0 +1,124 @@
+<div class="admin-dashboard-container" style="background-color:  #e4e9ef;">
+  <div class="top-nav">
+    <div class="logo">
+      <img src="assets/tut-logo.jpg" alt="Logo" class="logo-img" />
+    </div>
+    <div class="nav-right">
+      <button class="profile-btn">
+        <img src="assets/profile_pic.png" alt="Profile" class="profile-img" />
+      </button>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="sidebar" [class.collapsed]="isCollapsed">
+      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+      <ul>
+        <li>
+          <i class="icon fa fa-home"></i>
+          <span *ngIf="!isCollapsed">Dashboard</span>
+        </li>
+        <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/manage-schedule">View/Manage Schedule</span>
+        </li>
+        <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/manage-announcements">Manage Announcement</span>
+        </li>
+         <li>
+          <i class="icon fas fa-book"></i>
+          <span *ngIf="!isCollapsed" routerLink="/lecturer/time-tables">View Time Tables</span>
+      </li>
+        <li>
+          <i class="icon fas fa-file-alt"></i>
+          <span *ngIf="!isCollapsed" routerLink="/">Book a Lab</span>
+        </li>
+        <hr class="divider" />
+        <li>
+
+          <i class="icon fas fa-sign-out-alt"></i>
+          <span class="logout-link" routerLink="/landing-page" *ngIf="!isCollapsed">Logout</span>
+        </li>
+      </ul>
+    </div></div>
+<!-- <div class="admin-dashboard-container" style="background-color: #e4e9ef;"> style="padding-top: 10%;width: 90%;padding-left: 20%;"-->
+  
+         <div class="sub-header" [class.shifted]="isCollapsed">
+      <h3 class="sub-heading">VIEW TIME TABLE</h3>
+      <button class="back-button" routerLink="/lecturer-dashboard">
+        <span class="icon"></span> Back </button>
+    </div>
+
+    <div class="manage-announcements-container"style="padding-top: 10%;">
+  <div class="time-table-container" [class.shifted]="isCollapsed">
+    <div class="lecturer-controls">
+      <div class="filter-group">
+        <select class="form-control" [(ngModel)]="selectedDepartment" (change)="filterByDepartment()">
+          <option value="">All Departments</option>
+          <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+        </select>
+        
+        <button class="btn btn-primary" (click)="filterMySubjects()">
+          <i class="fas fa-filter"></i> Show Only My Subjects
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i> Loading timetables...
+    </div>
+
+    <div class="lecturer-time-table-list">
+      <div *ngFor="let timeTable of filteredTimeTables" class="time-table-card">
+        <div class="time-table-header">
+          <div>
+            <h3>{{ timeTable.department }}</h3>
+            <h4>{{ timeTable.semester }}</h4>
+            <p>{{ timeTable.startDate | date }} - {{ timeTable.endDate | date }}</p>
+          </div>
+          <div class="action-buttons">
+            <button class="btn btn-sm btn-success" (click)="generateShareLink(timeTable)">
+              <i class="fas fa-share-alt"></i> Share
+            </button>
+            <button class="btn btn-sm btn-primary" (click)="downloadTimeTable(timeTable)">
+              <i class="fas fa-download"></i> Download
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="shareLink" class="share-link-box alert alert-info">
+          Shareable link: <code>{{ shareLink }}</code>
+        </div>
+
+        <div class="time-table-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Lecturer</th>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Room</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let subject of timeTable.subjects" 
+                  [class.my-subject]="lecturerSubjects.includes(subject.name)">
+                <td>{{ subject.name }}</td>
+                <td>{{ subject.lecturer }}</td>
+                <td>{{ subject.day }}</td>
+                <td>{{ subject.time }}</td>
+                <td>{{ subject.room }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && filteredTimeTables.length === 0" class="no-results">
+        <p>No timetables found matching your criteria.</p>
+      </div>
+    </div>
+  </div>
+</div>
